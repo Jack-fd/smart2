@@ -3,6 +3,7 @@ package com.its.smart.api.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -12,6 +13,7 @@ import java.io.Serializable;
  * @author mq
  */
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class SearchFilter implements Serializable {
