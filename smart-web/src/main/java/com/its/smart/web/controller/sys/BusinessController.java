@@ -1,6 +1,10 @@
 package com.its.smart.web.controller.sys;
 
 import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.github.stuxuhai.jpinyin.PinyinHelper;
+import com.google.common.base.Strings;
+import com.its.smart.api.consts.SmartConsts;
 import com.its.smart.api.dto.ListFilter;
 import com.its.smart.api.dto.PageSearch;
 import com.its.smart.api.dto.R;
@@ -10,6 +14,8 @@ import com.its.smart.web.service.sys.IBusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -43,7 +49,11 @@ public class BusinessController {
      */
     @RequestMapping(value = "/page", method = RequestMethod.POST)
     R<Business> page(@RequestBody PageSearch pageSearch) {
-        return R.OK(pageSearch);
+        Page<Business> page = new Page<>(pageSearch.getPageNumber(), pageSearch.getPageSize());
+        Wrapper<Business> wrapper = QueryUtils.getWrapper(pageSearch);
+        page = businessService.selectPage(page, wrapper);
+        page.setTotal(businessService.selectCount(null));
+        return R.OK(page);
     }
 
     /**
@@ -63,8 +73,13 @@ public class BusinessController {
      */
     @RequestMapping(method = RequestMethod.POST)
     R<Business> create(@RequestBody Business business) {
+        if (Strings.isNullOrEmpty(business.getId())) {
+            business.setName(PinyinHelper.getShortPinyin(business.getDisplayName()));
+            business.setIsSys(SmartConsts.DataSysType.USER);
+        }
+        business.setModifyTime(Calendar.getInstance().getTime());
         Business result = new Business();
-        if (businessService.insert(business)) {
+        if (businessService.insertOrUpdate(business)) {
             result = businessService.selectById(business.getId());
         }
         return R.OK(result);
@@ -78,6 +93,6 @@ public class BusinessController {
      */
     @RequestMapping(method = RequestMethod.DELETE)
     R<String> delete(@RequestBody String[] ids) {
-        return R.OK(ids);
+        return R.OK(businessService.deleteBatchIds(Arrays.asList(ids)));
     }
 }

@@ -1,13 +1,14 @@
-CREATE TABLE `t_business` (
+CREATE TABLE `sys_business` (
 `id`  varchar(128) NOT NULL DEFAULT '' COMMENT '编号' ,
-`name`  varchar(255) NULL DEFAULT '' COMMENT '名称' ,
-`display_name`  varchar(128) NULL DEFAULT '' COMMENT '显示名称' ,
 `create_user`  varchar(128) NULL DEFAULT '' COMMENT '创建用户' ,
 `create_time`  datetime NULL DEFAULT NOW() COMMENT '创建时间' ,
 `modify_user`  varchar(128) NULL DEFAULT '' COMMENT '修改用户' ,
 `modify_time`  datetime NULL DEFAULT NOW() COMMENT '修改时间' ,
+`is_sys`  tinyint(1) NOT NULL DEFAULT FALSE COMMENT '是否系统数据' ,
+`is_test`  tinyint(1) NOT NULL DEFAULT FALSE COMMENT '是否测试数据' ,
+`name`  varchar(255) NULL DEFAULT '' COMMENT '名称' ,
+`display_name`  varchar(128) NULL DEFAULT '' COMMENT '显示名称' ,
 `memo`  varchar(255) NULL DEFAULT '' COMMENT '备注' ,
-`is_custom`  tinyint(1) NOT NULL DEFAULT TRUE COMMENT '是否自定义' ,
 PRIMARY KEY (`id`),
 UNIQUE KEY `uk_name` (`name`)
 )comment='企业信息';
