@@ -6,15 +6,15 @@ import lombok.Data;
 
 /**
  * <p>
- * 企业表
+ * 系统菜单表
  * </p>
  *
  * @author MQ
- * @since 2018-02-27
+ * @since 2018-03-07
  */
-@TableName("sys_business")
 @Data
-public class Business extends SysEntity<Business> {
+@TableName("sys_function")
+public class Function extends SysEntity<Function> {
 
     /**
      * 名称
@@ -31,12 +31,26 @@ public class Business extends SysEntity<Business> {
      * 备注
      */
     private String memo;
-
-
     /**
-     * 是否系统数据
+     * 状态
      */
-    @TableField("is_sys")
-    private Integer isSys;
+    private Integer status;
+    /**
+     * 图标
+     */
+    private String icon;
+    /**
+     * 地址
+     */
+    private String url;
+    /**
+     * 关联权限
+     */
+    private String relation;
+    /**
+     * 排序
+     */
+    @TableField("serial_number")
+    private Integer serialNumber;
 
 }

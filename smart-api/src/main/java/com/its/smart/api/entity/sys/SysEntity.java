@@ -14,7 +14,7 @@ import java.util.Date;
  * @author mq
  */
 @Data
-public class SmartEntity<T extends Model> extends IdEntity {
+public class SysEntity<T extends Model> extends IdEntity {
 
 
     /**
@@ -42,12 +42,6 @@ public class SmartEntity<T extends Model> extends IdEntity {
     @TableField("modify_time")
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date modifyTime;
-
-    /**
-     * 是否系统数据
-     */
-    @TableField("is_sys")
-    private Integer isSys;
 
     /**
      * 是否测试数据
