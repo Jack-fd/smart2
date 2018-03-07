@@ -1,12 +1,12 @@
 package com.its.smart.common.xss;
 
-import com.its.smart.common.Exception.SmartSqlException;
+import com.its.smart.common.exception.SmartSqlException;
 
 /**
  * SQL 过滤
  * @author MQ
  */
-public class SQLFilter {
+public class SqlFilter {
     /**
      * SQL注入过滤
      * @param str  待验证的字符串

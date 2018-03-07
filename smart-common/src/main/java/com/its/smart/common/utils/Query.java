@@ -15,13 +15,20 @@ import java.util.Optional;
 
 /**
  * 查询参数
+ *
+ * @author mq
  */
 @Data
 public class Query extends LinkedHashMap<String, Object> {
 
-    //当前页码
+    /**
+     * 当前页码
+     */
     private int page;
-    //每页条数
+
+    /**
+     * 每页条数
+     */
     private int limit;
 
     public Query(Map<String, Object> params) {
@@ -45,7 +52,7 @@ public class Query extends LinkedHashMap<String, Object> {
         List<SearchFilter> filterList = listFilter.getFilters();
         StringBuffer filterSql = new StringBuffer();
         for (SearchFilter searchFilter : filterList) {
-            if(searchFilter.getOperator().equals(SearchFilter.Operator.EQ)) {
+            if (searchFilter.getOperator().equals(SearchFilter.Operator.EQ)) {
                 filterSql.append(" OR ").append(searchFilter.getFieldName()).append(" = '").append(searchFilter.getValue()).append("'");
             }
 
@@ -59,7 +66,7 @@ public class Query extends LinkedHashMap<String, Object> {
         Map<String, Object> filterSqlMap = Maps.newHashMap();
         filterSqlMap.put("filterSql", filterSql);
         Sort sort = listFilter.getSort();
-        if(sort != null) {
+        if (sort != null) {
             Optional<String> sidx = Optional.ofNullable(sort.getFieldName());
             filterSqlMap.put("sidx", sidx.orElse(""));
             Optional<String> order = Optional.ofNullable(sort.getDirection());
@@ -88,7 +95,7 @@ public class Query extends LinkedHashMap<String, Object> {
         Map<String, Object> filterSqlMap = Maps.newHashMap();
         filterSqlMap.put("filterSql", filterSql);
         Sort sort = pageSearch.getSort();
-        if(sort != null) {
+        if (sort != null) {
             Optional<String> sidx = Optional.ofNullable(sort.getFieldName());
             filterSqlMap.put("sidx", sidx.orElse(""));
             Optional<String> order = Optional.ofNullable(sort.getDirection());

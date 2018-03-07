@@ -1,29 +1,21 @@
 package com.its.smart.api.entity.sys;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableId;
+import com.its.smart.api.entity.IdEntity;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 实体父类
+ *
+ * @author mq
  */
 @Data
-public class SmartEntity<T extends Model> extends Model<T> {
+public class SmartEntity<T extends Model> extends IdEntity {
 
-    /**
-     * 主键ID
-     */
-    @TableId
-    private String id;
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
 
     /**
      * 创建用户
@@ -35,6 +27,7 @@ public class SmartEntity<T extends Model> extends Model<T> {
      * 创建时间
      */
     @TableField("create_time")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**
@@ -47,6 +40,7 @@ public class SmartEntity<T extends Model> extends Model<T> {
      * 修改时间
      */
     @TableField("modify_time")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date modifyTime;
 
     /**

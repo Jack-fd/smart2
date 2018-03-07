@@ -1,4 +1,4 @@
-package com.its.smart.common.Exception;
+package com.its.smart.common.exception;
 
 import lombok.Data;
 

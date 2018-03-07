@@ -2,13 +2,14 @@ package com.its.smart.web.metaobjecthandler;
 
 import com.baomidou.mybatisplus.mapper.MetaObjectHandler;
 import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
 
 /**
  * 注入公共字段自动填充,任选注入方式即可
  * @author mq
  */
-@Log
+@Slf4j
 public class SmartMetaObjectHandler extends MetaObjectHandler {
 
 

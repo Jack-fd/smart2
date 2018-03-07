@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 /**
  * Business 表数据服务层接口实现类
+ *
+ * @author mq
  */
 @Service
 public class BusinessServiceImpl extends ServiceImpl<BusinessMapper, Business> implements IBusinessService {

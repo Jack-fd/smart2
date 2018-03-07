@@ -1,14 +1,15 @@
 package com.its.smart;
 
 import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
+ * `
  * Smart管理平台启动入口
  *
  * @author MQ
@@ -16,7 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableTransactionManagement
 @SpringBootApplication
-@Log
+@Slf4j
 public class SmartApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
