@@ -94,6 +94,7 @@ CREATE TABLE sys_role_function_rel (
   function_id  varchar(128) NOT NULL COMMENT '菜单编号' ,
   permissions  varchar(128) NOT NULL COMMENT '授权功能' ,
   is_sys  tinyint(1) NOT NULL DEFAULT FALSE COMMENT '是否系统数据' ,
+  is_test  tinyint(1) NOT NULL DEFAULT FALSE COMMENT '是否测试数据' ,
   PRIMARY KEY (id),
   CONSTRAINT fk_sys_role_function_rel_fid FOREIGN KEY (function_id) REFERENCES sys_function (id) ON UPDATE CASCADE
 )comment='系统角色与菜单';
@@ -103,6 +104,7 @@ CREATE TABLE sys_role_user_rel (
   role_id  varchar(128) NOT NULL COMMENT '角色编号' ,
   user_id  varchar(128) NOT NULL COMMENT '用户编号' ,
   is_sys  tinyint(1) NOT NULL DEFAULT FALSE COMMENT '是否系统数据' ,
+  is_test  tinyint(1) NOT NULL DEFAULT FALSE COMMENT '是否测试数据' ,
   PRIMARY KEY (id),
   CONSTRAINT fk_sys_role_user_rel_rid FOREIGN KEY (role_id) REFERENCES sys_role (id) ON UPDATE CASCADE,
   CONSTRAINT fk_sys_role_user_rel_uid FOREIGN KEY (user_id) REFERENCES sys_user (id) ON UPDATE CASCADE
@@ -203,6 +205,7 @@ CREATE TABLE rmc_wechat_message (
   modify_time datetime NULL DEFAULT NOW() COMMENT '修改时间',
   applicaion_id VARCHAR (128) NULL DEFAULT '' COMMENT '应用编号',
   business_id VARCHAR (128) NULL COMMENT '企业编号',
+  is_test  tinyint(1) NOT NULL DEFAULT FALSE COMMENT '是否测试数据' ,
   PRIMARY KEY (id),
   CONSTRAINT fk_rmc_wechat_message_aid FOREIGN KEY (applicaion_id) REFERENCES sys_applicaion (id) ON UPDATE CASCADE,
   CONSTRAINT fk_rmc_wechat_message_bid FOREIGN KEY (business_id) REFERENCES sys_business (id) ON UPDATE CASCADE
@@ -217,6 +220,7 @@ CREATE TABLE bmc_wechat_account (
   modify_time datetime NOT NULL DEFAULT NOW() COMMENT '修改时间',
   applicaion_id VARCHAR (128) NOT NULL COMMENT '应用编号',
   business_id VARCHAR (128) NOT NULL COMMENT '企业编号',
+  is_test  tinyint(1) NOT NULL DEFAULT FALSE COMMENT '是否测试数据' ,
   PRIMARY KEY (id),
   CONSTRAINT fk_bmc_awechat_bmc_account_aid FOREIGN KEY (applicaion_id) REFERENCES sys_applicaion (id) ON UPDATE CASCADE,
   CONSTRAINT fk_bmc_awechat_bmc_account_bid FOREIGN KEY (business_id) REFERENCES sys_business (id) ON UPDATE CASCADE
@@ -230,6 +234,7 @@ CREATE TABLE bmc_wechat_relation (
   modify_time datetime NOT NULL DEFAULT NOW() COMMENT '修改时间',
   applicaion_id VARCHAR (128) NOT NULL COMMENT '应用编号',
   business_id VARCHAR (128)  NOT NULL COMMENT '企业编号',
+  is_test  tinyint(1) NOT NULL DEFAULT FALSE COMMENT '是否测试数据' ,
   PRIMARY KEY (id),
   CONSTRAINT fk_wechat_bmc_relation_aid FOREIGN KEY (applicaion_id) REFERENCES sys_applicaion (id) ON UPDATE CASCADE,
   CONSTRAINT fk_wechat_bmc_relation_bid FOREIGN KEY (business_id) REFERENCES sys_business (id) ON UPDATE CASCADE

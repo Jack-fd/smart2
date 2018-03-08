@@ -25,15 +25,23 @@ public class RoleUserRel extends IdEntity<RoleUserRel> {
      */
     @TableField("role_id")
     private String roleId;
+
     /**
      * 用户编号
      */
     @TableField("user_id")
     private String userId;
+
     /**
      * 是否系统数据
      */
     @TableField("is_sys")
     private Integer isSys;
+
+    /**
+     * 是否测试数据
+     */
+    @TableField("is_test")
+    private Integer isTest;
 
 }

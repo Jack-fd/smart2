@@ -1,14 +1,18 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="Weixin-java-tool-suite" verbose="1">
+<suite name="Smart-wechat-suite" verbose="1">
     <test name="Sys_Service_Test">
         <classes>
             <class name="com.its.smart.web.service.sys.BusinessServiceTest"/>
+            <class name="com.its.smart.web.service.sys.UserServiceTest"/>
+            <class name="com.its.smart.web.service.sys.RoleServiceTest"/>
         </classes>
     </test>
 
     <test name="SYS_Controller_Test">
         <classes>
             <class name="com.its.smart.web.controller.sys.BusinessControllerTest"/>
+            <class name="com.its.smart.web.controller.sys.UserControllerTest"/>
+            <class name="com.its.smart.web.controller.sys.RoleControllerTest"/>
         </classes>
     </test>
 </suite>

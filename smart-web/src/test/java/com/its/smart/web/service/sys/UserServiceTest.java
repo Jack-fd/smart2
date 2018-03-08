@@ -1,10 +1,9 @@
 package com.its.smart.web.service.sys;
 
-import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.github.stuxuhai.jpinyin.PinyinHelper;
 import com.its.smart.api.consts.SmartConsts;
 import com.its.smart.api.entity.sys.Business;
+import com.its.smart.api.entity.sys.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -12,8 +11,8 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.testng.collections.Maps;
+import sun.management.snmp.util.SnmpCachedData;
 
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
@@ -22,12 +21,12 @@ import java.util.Map;
  * @author mq
  */
 @SpringBootTest
-public class BusinessServiceTest extends AbstractTestNGSpringContextTests implements BaseServiceTest {
+public class UserServiceTest extends AbstractTestNGSpringContextTests implements BaseServiceTest {
 
     @Autowired
-    private IBusinessService businessService;
+    private IUserService userService;
 
-    private static Business business;
+    private static User user;
 
     @BeforeTest
     @Override
@@ -35,54 +34,54 @@ public class BusinessServiceTest extends AbstractTestNGSpringContextTests implem
         LocalDateTime localDateTime = LocalDateTime.now();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String localDateTimeFormat = localDateTime.format(dateTimeFormatter);
-        business = new Business();
-        business.setDisplayName("测试数据_" + localDateTimeFormat);
-        business.setName(PinyinHelper.getShortPinyin(business.getDisplayName()));
-        business.setMemo("测试数据_" + localDateTimeFormat);
-        business.setIsTest(SmartConsts.DataTestType.TEST);
+        user = new User();
+        user.setDisplayName("测试数据_" + localDateTimeFormat);
+        user.setMemo("测试数据_" + localDateTimeFormat);
+        user.setIsTest(SmartConsts.DataTestType.TEST);
+        user.setAccount("acount");
+        user.setPassword("password");
+        user.setBusinessId("7e2ea371024b4b0e81c7941814b804f8");
+        user.setEmail("email");
+        user.setIcon("icon");
+        user.setPhone("123432432");
+        user.setSex(SmartConsts.UserSex.MALE);
+        user.setStatus(SmartConsts.UserStatusType.ENABLE);
     }
 
     @Test
     @Override
     public void testCreate() {
-        Assert.assertTrue(businessService.insert(business));
+        Assert.assertTrue(userService.insert(user));
     }
 
     @Test(dependsOnMethods = {"testCreate"})
     @Override
     public void testUpdate() {
-        Wrapper<Business> wrapper = new Wrapper(){
-
-            @Override
-            public String getSqlSegment() {
-                return " WHERE id = '" + business.getId() + "'";
-            }
-        };
-        Assert.assertTrue(businessService.update(business, wrapper));
+        Assert.assertTrue(userService.update(user, null));
     }
 
     @Test(dependsOnMethods = {"testUpdate"})
     @Override
     public void testFindId() {
-        Assert.assertNotNull(businessService.selectById(business.getId()));
+        Assert.assertNotNull(userService.selectById(user.getId()));
     }
 
     @Test(dependsOnMethods = {"testFindId"})
     @Override
     public void testList() {
-        Assert.assertNotNull(businessService.selectList(null));
+        Assert.assertNotNull(userService.selectList(null));
     }
 
     @Test(dependsOnMethods = {"testList"})
     @Override
     public void testPage() {
-        Assert.assertNotNull(businessService.selectPage(new Page<>(0, 10)));
+        Assert.assertNotNull(userService.selectPage(new Page<>(0, 10)));
     }
 
     @Test(dependsOnMethods = {"testPage"})
     @Override
     public void testDelete() {
-        Assert.assertTrue(businessService.deleteById(business.getId()));
+        Assert.assertTrue(userService.deleteById(user.getId()));
     }
 
 //    @Test(dependsOnMethods = {"testDelete"})
@@ -90,6 +89,6 @@ public class BusinessServiceTest extends AbstractTestNGSpringContextTests implem
 //    public void testDeleteTest() {
 //        Map<String, Object> map = Maps.newHashMap();
 //        map.put("is_test", SmartConsts.DataTestType.TEST);
-//        Assert.assertTrue(businessService.deleteByMap(map));
+//        Assert.assertTrue(userService.deleteByMap(map));
 //    }
 }

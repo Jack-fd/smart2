@@ -1,11 +1,14 @@
 package com.its.smart.web.controller.sys;
 
 import com.alibaba.fastjson.JSON;
+import com.github.stuxuhai.jpinyin.PinyinFormat;
+import com.github.stuxuhai.jpinyin.PinyinHelper;
 import com.its.smart.SmartApplication;
 import com.its.smart.api.consts.SmartConsts;
 import com.its.smart.api.dto.PageSearch;
 import com.its.smart.api.dto.R;
-import com.its.smart.api.entity.sys.Business;
+import com.its.smart.api.entity.sys.Role;
+import com.its.smart.api.entity.sys.User;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.Lists;
 import org.junit.runner.RunWith;
@@ -33,12 +36,12 @@ import java.util.Map;
 @SpringBootTest(classes = SmartApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @EnableAutoConfiguration
 @Slf4j
-public class BusinessControllerTest extends AbstractTestNGSpringContextTests implements BaseControllerTest {
+public class RoleControllerTest extends AbstractTestNGSpringContextTests implements BaseControllerTest {
 
     @Autowired
     private TestRestTemplate testRestTemplate;
 
-    private Business business;
+    private Role role;
 
     @BeforeTest
     @Override
@@ -46,10 +49,12 @@ public class BusinessControllerTest extends AbstractTestNGSpringContextTests imp
         LocalDateTime localDateTime = LocalDateTime.now();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String localDateTimeFormat = localDateTime.format(dateTimeFormatter);
-        business = new Business();
-        business.setDisplayName("测试数据_" + localDateTimeFormat);
-        business.setMemo("测试数据_" + localDateTimeFormat);
-        business.setIsTest(SmartConsts.DataTestType.TEST);
+        role = new Role();
+        role.setDisplayName("测试数据_" + localDateTimeFormat);
+        role.setMemo("测试数据_" + localDateTimeFormat);
+        role.setIsTest(SmartConsts.DataTestType.TEST);
+        role.setName(PinyinHelper.convertToPinyinString(role.getDisplayName(), ",", PinyinFormat.WITHOUT_TONE));
+        role.setStatus(SmartConsts.RoleStatusType.ENABLE);
     }
 
     @Test
@@ -57,22 +62,22 @@ public class BusinessControllerTest extends AbstractTestNGSpringContextTests imp
     public void testCreate() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-        HttpEntity<String> httpEntity = new HttpEntity<>(JSON.toJSONString(business), headers);
-        ResponseEntity<R> result = testRestTemplate.exchange("/api/admin/businesss", HttpMethod.POST, httpEntity, R.class);
+        HttpEntity<String> httpEntity = new HttpEntity<>(JSON.toJSONString(role), headers);
+        ResponseEntity<R> result = testRestTemplate.exchange("/api/admin/roles", HttpMethod.POST, httpEntity, R.class);
         log.error(result.getBody().toString());
         Assert.assertEquals(result.getStatusCode().value(), 200);
         Assert.assertEquals(result.getBody().getErrorCode(), 0);
         String json = JSON.toJSONString(result.getBody().getData());
-        business = JSON.parseObject(json, Business.class);
+        role = JSON.parseObject(json, Role.class);
     }
 
     @Test(dependsOnMethods = {"testCreate"})
     public void testUpdate() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-        log.error(business.toString());
-        HttpEntity<String> httpEntity = new HttpEntity<>(JSON.toJSONString(business), headers);
-        ResponseEntity<R> result = testRestTemplate.exchange("/api/admin/businesss", HttpMethod.POST, httpEntity, R.class);
+        log.error(role.toString());
+        HttpEntity<String> httpEntity = new HttpEntity<>(JSON.toJSONString(role), headers);
+        ResponseEntity<R> result = testRestTemplate.exchange("/api/admin/roles", HttpMethod.POST, httpEntity, R.class);
         log.error(result.getBody().toString());
         Assert.assertEquals(result.getStatusCode().value(), 200);
         Assert.assertEquals(result.getBody().getErrorCode(), 0);
@@ -83,8 +88,8 @@ public class BusinessControllerTest extends AbstractTestNGSpringContextTests imp
     @Override
     public void testDetail() {
         Map<String, String> multiValueMap = Maps.newHashMap();
-        multiValueMap.put("id", business.getId());
-        R r = testRestTemplate.getForObject("/api/admin/businesss/{id}", R.class, multiValueMap);
+        multiValueMap.put("id", role.getId());
+        R r = testRestTemplate.getForObject("/api/admin/roles/{id}", R.class, multiValueMap);
         Assert.assertEquals(r.getErrorCode(), 0);
         Assert.assertNotNull(r.getData());
         log.debug("detail:{}", r.getData());
@@ -96,7 +101,7 @@ public class BusinessControllerTest extends AbstractTestNGSpringContextTests imp
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         HttpEntity<String> httpEntity = new HttpEntity<>("{}", headers);
-        ResponseEntity<R> result = testRestTemplate.exchange("/api/admin/businesss/list", HttpMethod.POST, httpEntity, R.class);
+        ResponseEntity<R> result = testRestTemplate.exchange("/api/admin/roles/list", HttpMethod.POST, httpEntity, R.class);
         log.error(result.getBody().toString());
         Assert.assertEquals(result.getStatusCode().value(), 200);
         Assert.assertEquals(result.getBody().getErrorCode(), 0);
@@ -110,7 +115,7 @@ public class BusinessControllerTest extends AbstractTestNGSpringContextTests imp
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         PageSearch pageSearch = new PageSearch();
         HttpEntity<String> httpEntity = new HttpEntity<>(JSON.toJSONString(pageSearch), headers);
-        ResponseEntity<R> result = testRestTemplate.exchange("/api/admin/businesss/page", HttpMethod.POST, httpEntity, R.class);
+        ResponseEntity<R> result = testRestTemplate.exchange("/api/admin/roles/page", HttpMethod.POST, httpEntity, R.class);
         log.error(result.getBody().toString());
         Assert.assertEquals(result.getStatusCode().value(), 200);
         Assert.assertEquals(result.getBody().getErrorCode(), 0);
@@ -122,9 +127,9 @@ public class BusinessControllerTest extends AbstractTestNGSpringContextTests imp
     public void testDelete() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-        List<String> deleted = Lists.newArrayList(business.getId());
+        List<String> deleted = Lists.newArrayList(role.getId());
         HttpEntity<String> httpEntity = new HttpEntity<>(JSON.toJSONString(deleted), headers);
-        ResponseEntity<R> result = testRestTemplate.exchange("/api/admin/businesss", HttpMethod.DELETE, httpEntity, R.class);
+        ResponseEntity<R> result = testRestTemplate.exchange("/api/admin/roles", HttpMethod.DELETE, httpEntity, R.class);
         log.error(result.getBody().toString());
         Assert.assertEquals(result.getStatusCode().value(), 200);
         Assert.assertEquals(result.getBody().getErrorCode(), 0);

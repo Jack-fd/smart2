@@ -42,8 +42,8 @@ public interface BaseServiceTest {
      */
     void testDelete();
 
-    /**
-     * 删除测试数据
-     */
-    void testDeleteTest();
+//    /**
+//     * 删除测试数据
+//     */
+//    void testDeleteTest();
 }

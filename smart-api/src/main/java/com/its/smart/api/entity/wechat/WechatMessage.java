@@ -3,6 +3,7 @@ package com.its.smart.api.entity.wechat;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.its.smart.api.entity.IdEntity;
+import lombok.Data;
 
 import java.util.Date;
 
@@ -14,6 +15,7 @@ import java.util.Date;
  * @author MQ
  * @since 2018-03-07
  */
+@Data
 @TableName("wechat_message")
 public class WechatMessage extends IdEntity<WechatMessage> {
     /**

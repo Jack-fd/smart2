@@ -25,19 +25,28 @@ public class RoleFunctionRel extends IdEntity<RoleFunctionRel> {
      */
     @TableField("role_id")
     private String roleId;
+
     /**
      * 菜单编号
      */
     @TableField("function_id")
     private String functionId;
+
     /**
      * 授权功能
      */
     private String permissions;
+
     /**
      * 是否系统数据
      */
     @TableField("is_sys")
     private Integer isSys;
+
+    /**
+     * 是否测试数据
+     */
+    @TableField("is_test")
+    private Integer isTest;
 
 }

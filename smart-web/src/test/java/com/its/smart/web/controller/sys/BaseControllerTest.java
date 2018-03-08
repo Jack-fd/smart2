@@ -2,6 +2,8 @@ package com.its.smart.web.controller.sys;
 
 /**
  * Controller  测试基础类
+ *
+ * @author mq
  */
 public interface BaseControllerTest {
 

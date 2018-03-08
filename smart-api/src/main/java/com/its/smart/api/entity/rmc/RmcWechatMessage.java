@@ -81,4 +81,9 @@ public class RmcWechatMessage extends IdEntity<RmcWechatMessage> {
     @TableField("business_id")
     private String businessId;
 
+    /**
+     * 是否测试数据
+     */
+    @TableField("is_test")
+    private Integer isTest;
 }
