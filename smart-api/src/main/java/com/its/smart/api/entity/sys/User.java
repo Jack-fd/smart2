@@ -17,6 +17,17 @@ import lombok.Data;
 public class User extends SysEntity<User> {
 
     /**
+     * 名称
+     */
+    private String name;
+
+    /**
+     * 显示名称
+     */
+    @TableField("display_name")
+    private String displayName;
+
+    /**
      * 备注
      */
     private String memo;
