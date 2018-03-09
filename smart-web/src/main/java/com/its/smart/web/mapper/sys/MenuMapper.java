@@ -1,6 +1,6 @@
 package com.its.smart.web.mapper.sys;
 
-import com.its.smart.api.entity.sys.Function;
+import com.its.smart.api.entity.sys.Menu;
 import com.its.smart.web.mapper.SmartMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.its.smart.web.mapper.SmartMapper;
  * @author MQ
  * @since 2018-03-07
  */
-public interface FunctionMapper extends SmartMapper<Function> {
+public interface MenuMapper extends SmartMapper<Menu> {
 
 }

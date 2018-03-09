@@ -1,12 +1,9 @@
 package com.its.smart.api.entity.sys;
 
 import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.its.smart.api.entity.IdEntity;
 import lombok.Data;
-
-import java.io.Serializable;
 
 /**
  * <p>
@@ -17,8 +14,8 @@ import java.io.Serializable;
  * @since 2018-03-07
  */
 @Data
-@TableName("sys_role_function_rel")
-public class RoleFunctionRel extends IdEntity<RoleFunctionRel> {
+@TableName("sys_role_menu_rel")
+public class RoleMenuRel extends IdEntity<RoleMenuRel> {
 
     /**
      * 角色编号
@@ -29,13 +26,8 @@ public class RoleFunctionRel extends IdEntity<RoleFunctionRel> {
     /**
      * 菜单编号
      */
-    @TableField("function_id")
-    private String functionId;
-
-    /**
-     * 授权功能
-     */
-    private String permissions;
+    @TableField("menu_id")
+    private String menuId;
 
     /**
      * 是否系统数据

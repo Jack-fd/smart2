@@ -13,8 +13,8 @@ import lombok.Data;
  * @since 2018-03-07
  */
 @Data
-@TableName("sys_function")
-public class Function extends SysEntity<Function> {
+@TableName("sys_menu")
+public class Menu extends SysEntity<Menu> {
 
     /**
      * 名称
@@ -31,26 +31,42 @@ public class Function extends SysEntity<Function> {
      * 备注
      */
     private String memo;
+
     /**
      * 状态
      */
     private Integer status;
+
     /**
-     * 图标
+     * 父菜单ID，一级菜单为0
      */
-    private String icon;
+    @TableField("parent_id")
+    private Long parentId;
+
     /**
-     * 地址
+     * 菜单URL
      */
     private String url;
+
     /**
-     * 关联权限
+     * 授权(多个用逗号分隔，如：user:list,user:create)
      */
-    private String relation;
+    private String permissions;
+
+    /**
+     * 类型   0：目录   1：菜单   2：按钮
+     */
+    private Integer type;
+
+    /**
+     * 菜单图标
+     */
+    private String icon;
+
     /**
      * 排序
      */
-    @TableField("serial_number")
-    private Integer serialNumber;
+    @TableField("order_num")
+    private Integer orderNum;
 
 }

@@ -7,9 +7,9 @@ import com.its.smart.api.dto.ListFilter;
 import com.its.smart.api.dto.PageSearch;
 import com.its.smart.api.dto.R;
 import com.its.smart.api.entity.sys.Business;
-import com.its.smart.api.entity.sys.Function;
+import com.its.smart.api.entity.sys.Menu;
 import com.its.smart.common.utils.QueryUtils;
-import com.its.smart.web.service.sys.IFunctionService;
+import com.its.smart.web.service.sys.IMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,10 +27,10 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/admin/functions")
-public class FunctionController {
+public class MenuController {
 
     @Autowired
-    private IFunctionService functionService;
+    private IMenuService functionService;
 
     /**
      * 按条件查询
@@ -39,7 +39,7 @@ public class FunctionController {
      */
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     R<List<Business>> list(@RequestBody ListFilter listFilter) {
-        Wrapper<Function> wrapper = QueryUtils.getWrapper(listFilter);
+        Wrapper<Menu> wrapper = QueryUtils.getWrapper(listFilter);
         return R.OK(functionService.selectList(wrapper));
     }
 
@@ -51,8 +51,8 @@ public class FunctionController {
      */
     @RequestMapping(value = "/page", method = RequestMethod.POST)
     R<Business> page(@RequestBody PageSearch pageSearch) {
-        Page<Function> page = new Page<>(pageSearch.getPageNumber(), pageSearch.getPageSize());
-        Wrapper<Function> wrapper = QueryUtils.getWrapper(pageSearch);
+        Page<Menu> page = new Page<>(pageSearch.getPageNumber(), pageSearch.getPageSize());
+        Wrapper<Menu> wrapper = QueryUtils.getWrapper(pageSearch);
         page = functionService.selectPage(page, wrapper);
         page.setTotal(functionService.selectCount(null));
         return R.OK(page);
@@ -74,9 +74,9 @@ public class FunctionController {
      * @return 结果
      */
     @RequestMapping(method = RequestMethod.POST)
-    R<Business> create(@RequestBody Function function) {
+    R<Business> create(@RequestBody Menu function) {
         function.setModifyTime(Calendar.getInstance().getTime());
-        Function result = new Function();
+        Menu result = new Menu();
         if (functionService.insertOrUpdate(function)) {
             result = functionService.selectById(function.getId());
         }

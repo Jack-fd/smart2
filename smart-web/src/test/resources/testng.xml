@@ -5,6 +5,24 @@
             <class name="com.its.smart.web.service.sys.BusinessServiceTest"/>
             <class name="com.its.smart.web.service.sys.UserServiceTest"/>
             <class name="com.its.smart.web.service.sys.RoleServiceTest"/>
+            <class name="com.its.smart.web.service.sys.MenuServiceTest"/>
+            <class name="com.its.smart.web.service.sys.RoleUserRelServiceTest"/>
+            <class name="com.its.smart.web.service.sys.RoleUserRelServiceTest"/>
+            <class name="com.its.smart.web.service.sys.DictionaryServiceTest"/>
+            <class name="com.its.smart.web.service.sys.ApplicationServiceTest"/>
+        </classes>
+    </test>
+
+    <test name="Wechat_Service_Test">
+        <classes>
+            <class name="com.its.smart.web.service.wechat.WechatMessageServiceTest"/>
+            <class name="com.its.smart.web.service.wechat.WechatMessageTemplateServiceTest"/>
+        </classes>
+    </test>
+
+    <test name="Relax_Service_Test">
+        <classes>
+            <class name="com.its.smart.web.service.relax.RelaxWechatCofnigServiceTest"/>
         </classes>
     </test>
 

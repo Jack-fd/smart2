@@ -1,8 +1,9 @@
 package com.its.smart.web.service.sys;
 
 import com.baomidou.mybatisplus.plugins.Page;
+import com.github.stuxuhai.jpinyin.PinyinFormat;
+import com.github.stuxuhai.jpinyin.PinyinHelper;
 import com.its.smart.api.consts.SmartConsts;
-import com.its.smart.api.entity.sys.Business;
 import com.its.smart.api.entity.sys.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,12 +11,9 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import org.testng.collections.Maps;
-import sun.management.snmp.util.SnmpCachedData;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Map;
 
 /**
  * @author mq
@@ -26,7 +24,10 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests implements
     @Autowired
     private IUserService userService;
 
-    private static User user;
+    @Autowired
+    private IBusinessService businessService;
+
+    private User user;
 
     @BeforeTest
     @Override
@@ -36,11 +37,12 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests implements
         String localDateTimeFormat = localDateTime.format(dateTimeFormatter);
         user = new User();
         user.setDisplayName("测试数据_" + localDateTimeFormat);
+        user.setName(PinyinHelper.convertToPinyinString(user.getDisplayName(), ",", PinyinFormat.WITHOUT_TONE));
         user.setMemo("测试数据_" + localDateTimeFormat);
         user.setIsTest(SmartConsts.DataTestType.TEST);
-        user.setAccount("acount");
-        user.setPassword("password");
-        user.setBusinessId("7e2ea371024b4b0e81c7941814b804f8");
+        user.setAccount("admin");
+        user.setPassword("admin");
+        user.setBusinessId("3e664b4f1d5d40adb48b569f257e3a20");
         user.setEmail("email");
         user.setIcon("icon");
         user.setPhone("123432432");

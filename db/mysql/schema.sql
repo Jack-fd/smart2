@@ -1,3 +1,4 @@
+-- 系统企业信息
 CREATE TABLE sys_business (
   id  varchar(128) NOT NULL DEFAULT '' COMMENT '编号' ,
   create_user  varchar(128) NULL DEFAULT '' COMMENT '创建用户' ,
@@ -11,8 +12,9 @@ CREATE TABLE sys_business (
   memo  varchar(255) NULL DEFAULT '' COMMENT '备注' ,
   PRIMARY KEY (id),
   UNIQUE KEY uk_sys_business_name (name)
-)comment='系统企业信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统企业信息';
 
+-- 系统用户信息
 CREATE TABLE sys_user (
   id  varchar(128) NOT NULL DEFAULT '' COMMENT '编号' ,
   create_user  varchar(128) NULL DEFAULT '' COMMENT '创建用户' ,
@@ -35,8 +37,9 @@ CREATE TABLE sys_user (
   PRIMARY KEY (id) ,
   UNIQUE KEY uk_sys_user_account (account),
   CONSTRAINT fk_sys_user_bid FOREIGN KEY (business_id) REFERENCES sys_business (id) ON UPDATE CASCADE
-)comment='系统用户信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 comment='系统用户信息';
 
+-- 数据字典表
 CREATE TABLE sys_dictionary (
   id  varchar(128) NOT NULL DEFAULT '' COMMENT '编号' ,
   create_user  varchar(128) NULL DEFAULT '' COMMENT '创建用户' ,
@@ -50,11 +53,12 @@ CREATE TABLE sys_dictionary (
   memo  varchar(255) NULL DEFAULT '' COMMENT '备注' ,
   value  varchar(255) NULL COMMENT '值' ,
   type  varchar(128) NULL COMMENT '字典分类' ,
-  serial_number  int(255) NULL COMMENT '排序' ,
+  order_number  int(255) NULL COMMENT '排序' ,
   PRIMARY KEY (id)
-)comment='数据字典表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='数据字典表';
 
-CREATE TABLE sys_function (
+-- 系统菜单表
+CREATE TABLE sys_menu (
   id  varchar(128) NOT NULL DEFAULT '' COMMENT '编号' ,
   create_user  varchar(128) NULL DEFAULT '' COMMENT '创建用户' ,
   create_time  datetime NULL DEFAULT NOW() COMMENT '创建时间' ,
@@ -66,13 +70,16 @@ CREATE TABLE sys_function (
   is_sys  tinyint(1) NOT NULL DEFAULT FALSE COMMENT '是否系统数据' ,
   memo  varchar(255) NULL DEFAULT '' COMMENT '备注' ,
   status  tinyint(1) NULL COMMENT '状态' ,
-  icon  varchar(255) NULL COMMENT '图标' ,
-  url  varchar(255) NULL COMMENT '地址' ,
-  relation  varchar(128) NULL COMMENT '关联权限' ,
-  serial_number  int(255) NULL COMMENT '排序' ,
+  parent_id bigint COMMENT '父菜单ID，一级菜单为0',
+  url varchar(200) COMMENT '菜单URL',
+  permissions varchar(500) COMMENT '授权(多个用逗号分隔，如：user:list,user:create)',
+  type int COMMENT '类型   0：目录   1：菜单   2：按钮',
+  icon varchar(50) COMMENT '菜单图标',
+  order_number int COMMENT '排序',
   PRIMARY KEY (id)
-)comment='系统菜单表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统菜单表';
 
+-- 系统角色表
 CREATE TABLE sys_role (
   id  varchar(128) NOT NULL DEFAULT '' COMMENT '编号' ,
   create_user  varchar(128) NULL DEFAULT '' COMMENT '创建用户' ,
@@ -86,19 +93,21 @@ CREATE TABLE sys_role (
   memo  varchar(255) NULL DEFAULT '' COMMENT '备注' ,
   status  tinyint(1) NULL COMMENT '状态' ,
   PRIMARY KEY (id)
-)comment='系统角色表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统角色表';
 
-CREATE TABLE sys_role_function_rel (
+-- 系统角色与菜单
+CREATE TABLE sys_role_menu_rel (
   id  varchar(128) NOT NULL COMMENT '编号' ,
   role_id  varchar(128) NOT NULL COMMENT '角色编号' ,
-  function_id  varchar(128) NOT NULL COMMENT '菜单编号' ,
+  menu_id  varchar(128) NOT NULL COMMENT '菜单编号' ,
   permissions  varchar(128) NOT NULL COMMENT '授权功能' ,
   is_sys  tinyint(1) NOT NULL DEFAULT FALSE COMMENT '是否系统数据' ,
   is_test  tinyint(1) NOT NULL DEFAULT FALSE COMMENT '是否测试数据' ,
   PRIMARY KEY (id),
-  CONSTRAINT fk_sys_role_function_rel_fid FOREIGN KEY (function_id) REFERENCES sys_function (id) ON UPDATE CASCADE
-)comment='系统角色与菜单';
+  CONSTRAINT fk_sys_role_menu_rel_fid FOREIGN KEY (menu_id) REFERENCES sys_menu (id) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统角色与菜单';
 
+-- 角色与用户
 CREATE TABLE sys_role_user_rel (
   id  varchar(128) NOT NULL COMMENT '编号' ,
   role_id  varchar(128) NOT NULL COMMENT '角色编号' ,
@@ -108,8 +117,9 @@ CREATE TABLE sys_role_user_rel (
   PRIMARY KEY (id),
   CONSTRAINT fk_sys_role_user_rel_rid FOREIGN KEY (role_id) REFERENCES sys_role (id) ON UPDATE CASCADE,
   CONSTRAINT fk_sys_role_user_rel_uid FOREIGN KEY (user_id) REFERENCES sys_user (id) ON UPDATE CASCADE
-)comment='角色与用户';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色与用户';
 
+-- 系统应用管理
 CREATE TABLE sys_applicaion (
   id  varchar(128) NOT NULL DEFAULT '' COMMENT '编号' ,
   create_user  varchar(128) NULL DEFAULT '' COMMENT '创建用户' ,
@@ -126,8 +136,9 @@ CREATE TABLE sys_applicaion (
   business_id  varchar(128) NULL COMMENT '企业编号' ,
   PRIMARY KEY (id),
   CONSTRAINT fk_sys_applicaion_bid FOREIGN KEY (business_id) REFERENCES sys_business (id) ON UPDATE CASCADE
-)comment='系统应用管理';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统应用管理';
 
+-- 微信消息
 CREATE TABLE wechat_message (
   id  varchar(128) NOT NULL COMMENT '编号' ,
   system_type  varchar(128) NOT NULL COMMENT '应用类型' ,
@@ -143,8 +154,9 @@ CREATE TABLE wechat_message (
   PRIMARY KEY (id),
   CONSTRAINT fk_wechat_message_aid FOREIGN KEY (applicaion_id) REFERENCES sys_applicaion (id) ON UPDATE CASCADE,
   CONSTRAINT fk_wechat_message_bid FOREIGN KEY (business_id) REFERENCES sys_business (id) ON UPDATE CASCADE
-)comment='微信消息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信消息';
 
+-- 微信消息模板
 CREATE TABLE wechat_message_template (
   id  varchar(128) NOT NULL DEFAULT '' COMMENT '编号' ,
   create_user  varchar(128) NULL DEFAULT '' COMMENT '创建用户' ,
@@ -162,9 +174,9 @@ CREATE TABLE wechat_message_template (
   PRIMARY KEY (id),
   CONSTRAINT t_wechat_message_template_aid FOREIGN KEY (applicaion_id) REFERENCES sys_applicaion (id) ON UPDATE CASCADE,
   CONSTRAINT t_wechat_message_template_bid FOREIGN KEY (business_id) REFERENCES sys_business (id) ON UPDATE CASCADE
-)comment='微信消息模板';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信消息模板';
 
-
+-- relax微信用用配置
 CREATE TABLE relax_wechat_cofnig (
   id  varchar(128) NOT NULL DEFAULT '' COMMENT '编号' ,
   create_user  varchar(128) NULL DEFAULT '' COMMENT '创建用户' ,
@@ -188,8 +200,9 @@ CREATE TABLE relax_wechat_cofnig (
   PRIMARY KEY (id),
   CONSTRAINT fk_relax_wechat_cofnig_aid FOREIGN KEY (applicaion_id) REFERENCES sys_applicaion (id) ON UPDATE CASCADE,
   CONSTRAINT fk_relax_wechat_cofnig_bid FOREIGN KEY (business_id) REFERENCES sys_business (id) ON UPDATE CASCADE
-)comment='relax微信用用配置';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='relax微信用用配置';
 
+-- RMC消息采集
 CREATE TABLE rmc_wechat_message (
   id VARCHAR (128) NOT NULL COMMENT '编号',
   unique_message VARCHAR (128) NULL COMMENT '消息唯一计算方法',
@@ -209,8 +222,9 @@ CREATE TABLE rmc_wechat_message (
   PRIMARY KEY (id),
   CONSTRAINT fk_rmc_wechat_message_aid FOREIGN KEY (applicaion_id) REFERENCES sys_applicaion (id) ON UPDATE CASCADE,
   CONSTRAINT fk_rmc_wechat_message_bid FOREIGN KEY (business_id) REFERENCES sys_business (id) ON UPDATE CASCADE
-) COMMENT = 'RMC消息采集';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8  COMMENT = 'RMC消息采集';
 
+-- BMC账号信息
 CREATE TABLE bmc_wechat_account (
   id VARCHAR (128) NOT NULL COMMENT '编号',
   openid  VARCHAR (256)  NULL DEFAULT '' COMMENT '微信账号' ,
@@ -224,8 +238,9 @@ CREATE TABLE bmc_wechat_account (
   PRIMARY KEY (id),
   CONSTRAINT fk_bmc_awechat_bmc_account_aid FOREIGN KEY (applicaion_id) REFERENCES sys_applicaion (id) ON UPDATE CASCADE,
   CONSTRAINT fk_bmc_awechat_bmc_account_bid FOREIGN KEY (business_id) REFERENCES sys_business (id) ON UPDATE CASCADE
-) COMMENT = 'BMC账号信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8  COMMENT = 'BMC账号信息';
 
+-- BMC用户关系
 CREATE TABLE bmc_wechat_relation (
   id VARCHAR (128) NOT NULL COMMENT '编号',
   openid  VARCHAR (256)  NULL DEFAULT '' COMMENT '微信账号' ,
@@ -238,4 +253,4 @@ CREATE TABLE bmc_wechat_relation (
   PRIMARY KEY (id),
   CONSTRAINT fk_wechat_bmc_relation_aid FOREIGN KEY (applicaion_id) REFERENCES sys_applicaion (id) ON UPDATE CASCADE,
   CONSTRAINT fk_wechat_bmc_relation_bid FOREIGN KEY (business_id) REFERENCES sys_business (id) ON UPDATE CASCADE
-) COMMENT = 'BMC用户关系';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8  COMMENT = 'BMC用户关系';

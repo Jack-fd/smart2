@@ -1,7 +1,7 @@
 package com.its.smart.web.service.sys;
 
 import com.baomidou.mybatisplus.service.IService;
-import com.its.smart.api.entity.sys.Function;
+import com.its.smart.api.entity.sys.Menu;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.its.smart.api.entity.sys.Function;
  * @author MQ
  * @since 2018-03-07
  */
-public interface IFunctionService extends IService<Function> {
+public interface IMenuService extends IService<Menu> {
 
 }

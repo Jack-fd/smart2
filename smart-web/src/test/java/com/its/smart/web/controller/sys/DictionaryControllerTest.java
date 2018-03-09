@@ -51,7 +51,7 @@ public class DictionaryControllerTest extends AbstractTestNGSpringContextTests i
         dictionary.setDisplayName("测试数据_" + localDateTimeFormat);
         dictionary.setMemo("测试数据_" + localDateTimeFormat);
         dictionary.setIsTest(SmartConsts.DataTestType.TEST);
-        dictionary.setSerialNumber(1);
+        dictionary.setOrderNumber(1);
         dictionary.setType("type");
         dictionary.setValue("value");
     }

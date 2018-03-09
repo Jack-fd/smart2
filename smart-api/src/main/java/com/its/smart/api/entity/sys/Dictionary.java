@@ -45,7 +45,7 @@ public class Dictionary extends SysEntity<Dictionary> {
     /**
      * 排序
      */
-    @TableField("serial_number")
-    private Integer serialNumber;
+    @TableField("order_number")
+    private Integer orderNumber;
 
 }

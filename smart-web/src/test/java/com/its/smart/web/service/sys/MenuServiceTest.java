@@ -4,9 +4,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.github.stuxuhai.jpinyin.PinyinFormat;
 import com.github.stuxuhai.jpinyin.PinyinHelper;
 import com.its.smart.api.consts.SmartConsts;
-import com.its.smart.api.entity.sys.Function;
-import com.its.smart.api.entity.sys.RoleUserRel;
-import com.its.smart.api.entity.sys.User;
+import com.its.smart.api.entity.sys.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -21,12 +19,12 @@ import java.time.format.DateTimeFormatter;
  * @author mq
  */
 @SpringBootTest
-public class FunctionServiceTest extends AbstractTestNGSpringContextTests implements BaseServiceTest {
+public class MenuServiceTest extends AbstractTestNGSpringContextTests implements BaseServiceTest {
 
     @Autowired
-    private IFunctionService functionService;
+    private IMenuService functionService;
 
-    private static Function function;
+    private static Menu menu;
 
     @BeforeTest
     @Override
@@ -34,33 +32,37 @@ public class FunctionServiceTest extends AbstractTestNGSpringContextTests implem
         LocalDateTime localDateTime = LocalDateTime.now();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String localDateTimeFormat = localDateTime.format(dateTimeFormatter);
-        function = new Function();
-        function.setDisplayName("测试数据_" + localDateTimeFormat);
-        function.setName(PinyinHelper.convertToPinyinString(function.getDisplayName(), ",", PinyinFormat.WITHOUT_TONE));
-        function.setMemo("测试数据_" + localDateTimeFormat);
-        function.setIsTest(SmartConsts.DataTestType.TEST);
-        function.setRelation("relation");
-        function.setUrl("url");
-        function.setIcon("icon");
-        function.setStatus(SmartConsts.UserStatusType.ENABLE);
+        menu = new Menu();
+        menu.setDisplayName("数据字典");
+        menu.setName("dictionarys");
+
+//        menu.setName(PinyinHelper.convertToPinyinString(menu.getDisplayName(), ",", PinyinFormat.WITHOUT_TONE));
+        menu.setMemo("测试数据_" + localDateTimeFormat);
+        menu.setIsTest(SmartConsts.DataTestType.TEST);
+        menu.setPermissions("permissions");
+        menu.setType(1);
+        menu.setOrderNum(5);
+        menu.setUrl("/dictionary");
+        menu.setIcon("icon");
+        menu.setStatus(SmartConsts.UserStatusType.ENABLE);
     }
 
     @Test
     @Override
     public void testCreate() {
-        Assert.assertTrue(functionService.insert(function));
+        Assert.assertTrue(functionService.insert(menu));
     }
 
     @Test(dependsOnMethods = {"testCreate"})
     @Override
     public void testUpdate() {
-        Assert.assertTrue(functionService.update(function, null));
+        Assert.assertTrue(functionService.update(menu, null));
     }
 
     @Test(dependsOnMethods = {"testUpdate"})
     @Override
     public void testFindId() {
-        Assert.assertNotNull(functionService.selectById(function.getId()));
+        Assert.assertNotNull(functionService.selectById(menu.getId()));
     }
 
     @Test(dependsOnMethods = {"testFindId"})
@@ -78,7 +80,7 @@ public class FunctionServiceTest extends AbstractTestNGSpringContextTests implem
     @Test(dependsOnMethods = {"testPage"})
     @Override
     public void testDelete() {
-        Assert.assertTrue(functionService.deleteById(function.getId()));
+        Assert.assertTrue(functionService.deleteById(menu.getId()));
     }
 
 //    @Test(dependsOnMethods = {"testDelete"})

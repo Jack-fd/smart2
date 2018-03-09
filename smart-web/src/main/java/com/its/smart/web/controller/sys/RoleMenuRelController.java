@@ -8,9 +8,9 @@ import com.its.smart.api.consts.SmartConsts;
 import com.its.smart.api.dto.ListFilter;
 import com.its.smart.api.dto.PageSearch;
 import com.its.smart.api.dto.R;
-import com.its.smart.api.entity.sys.RoleFunctionRel;
+import com.its.smart.api.entity.sys.RoleMenuRel;
 import com.its.smart.common.utils.QueryUtils;
-import com.its.smart.web.service.sys.IRoleFunctionRelService;
+import com.its.smart.web.service.sys.IRoleMenuRelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,9 +27,10 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/admin/rolefunctionrels")
-public class RoleFunctionRelController {
+public class RoleMenuRelController {
+
     @Autowired
-    private IRoleFunctionRelService roleFunctionRelService;
+    private IRoleMenuRelService roleFunctionRelService;
 
     /**
      * 按条件查询
@@ -37,8 +38,8 @@ public class RoleFunctionRelController {
      * @return 集合
      */
     @RequestMapping(value = "/list", method = RequestMethod.POST)
-    R<List<RoleFunctionRel>> list(@RequestBody ListFilter listFilter) {
-        Wrapper<RoleFunctionRel> wrapper = QueryUtils.getWrapper(listFilter);
+    R<List<RoleMenuRel>> list(@RequestBody ListFilter listFilter) {
+        Wrapper<RoleMenuRel> wrapper = QueryUtils.getWrapper(listFilter);
         return R.OK(roleFunctionRelService.selectList(wrapper));
     }
 
@@ -49,9 +50,9 @@ public class RoleFunctionRelController {
      * @return 集合
      */
     @RequestMapping(value = "/page", method = RequestMethod.POST)
-    R<RoleFunctionRel> page(@RequestBody PageSearch pageSearch) {
-        Page<RoleFunctionRel> page = new Page<>(pageSearch.getPageNumber(), pageSearch.getPageSize());
-        Wrapper<RoleFunctionRel> wrapper = QueryUtils.getWrapper(pageSearch);
+    R<RoleMenuRel> page(@RequestBody PageSearch pageSearch) {
+        Page<RoleMenuRel> page = new Page<>(pageSearch.getPageNumber(), pageSearch.getPageSize());
+        Wrapper<RoleMenuRel> wrapper = QueryUtils.getWrapper(pageSearch);
         page = roleFunctionRelService.selectPage(page, wrapper);
         page.setTotal(roleFunctionRelService.selectCount(null));
         return R.OK(page);
@@ -63,7 +64,7 @@ public class RoleFunctionRelController {
      * @return 实体
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    R<RoleFunctionRel> detail(@PathVariable("id") String id) {
+    R<RoleMenuRel> detail(@PathVariable("id") String id) {
         return R.OK(roleFunctionRelService.selectById(id));
     }
 
@@ -73,13 +74,13 @@ public class RoleFunctionRelController {
      * @return 结果
      */
     @RequestMapping(method = RequestMethod.POST)
-    R<RoleFunctionRel> create(@RequestBody RoleFunctionRel roleFunctionRel) {
-        if (Strings.isNullOrEmpty(roleFunctionRel.getId())) {
-            roleFunctionRel.setIsSys(SmartConsts.DataSysType.USER);
+    R<RoleMenuRel> create(@RequestBody RoleMenuRel roleMenuRel) {
+        if (Strings.isNullOrEmpty(roleMenuRel.getId())) {
+            roleMenuRel.setIsSys(SmartConsts.DataSysType.USER);
         }
-        RoleFunctionRel result = new RoleFunctionRel();
-        if (roleFunctionRelService.insertOrUpdate(roleFunctionRel)) {
-            result = roleFunctionRelService.selectById(roleFunctionRel.getId());
+        RoleMenuRel result = new RoleMenuRel();
+        if (roleFunctionRelService.insertOrUpdate(roleMenuRel)) {
+            result = roleFunctionRelService.selectById(roleMenuRel.getId());
         }
         return R.OK(result);
     }

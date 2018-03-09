@@ -1,14 +1,11 @@
 package com.its.smart.web.controller.sys;
 
 import com.alibaba.fastjson.JSON;
-import com.github.stuxuhai.jpinyin.PinyinFormat;
-import com.github.stuxuhai.jpinyin.PinyinHelper;
 import com.its.smart.SmartApplication;
 import com.its.smart.api.consts.SmartConsts;
 import com.its.smart.api.dto.PageSearch;
 import com.its.smart.api.dto.R;
-import com.its.smart.api.entity.sys.Function;
-import com.its.smart.api.entity.sys.Role;
+import com.its.smart.api.entity.sys.RoleMenuRel;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.Lists;
 import org.junit.runner.RunWith;
@@ -24,8 +21,6 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.testng.collections.Maps;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -36,28 +31,21 @@ import java.util.Map;
 @SpringBootTest(classes = SmartApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @EnableAutoConfiguration
 @Slf4j
-public class FunctionControllerTest extends AbstractTestNGSpringContextTests implements BaseControllerTest {
+public class RoleMenuRelControllerTest extends AbstractTestNGSpringContextTests implements BaseControllerTest {
 
     @Autowired
     private TestRestTemplate testRestTemplate;
 
-    private Function function;
+    private RoleMenuRel roleMenuRel;
 
     @BeforeTest
     @Override
     public void initData() {
-        LocalDateTime localDateTime = LocalDateTime.now();
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String localDateTimeFormat = localDateTime.format(dateTimeFormatter);
-        function = new Function();
-        function.setDisplayName("测试数据_" + localDateTimeFormat);
-        function.setName(PinyinHelper.convertToPinyinString(function.getDisplayName(), ",", PinyinFormat.WITHOUT_TONE));
-        function.setMemo("测试数据_" + localDateTimeFormat);
-        function.setIsTest(SmartConsts.DataTestType.TEST);
-        function.setRelation("relation");
-        function.setUrl("url");
-        function.setIcon("icon");
-        function.setStatus(SmartConsts.UserStatusType.ENABLE);
+        roleMenuRel = new RoleMenuRel();
+        roleMenuRel.setMenuId("142c4c59c8314be6942976fba6ec7cfc");
+        roleMenuRel.setRoleId("00759bf8e86c4ec3b7b97c0ddde09850");
+        roleMenuRel.setIsTest(SmartConsts.DataTestType.TEST);
+
     }
 
     @Test
@@ -65,22 +53,22 @@ public class FunctionControllerTest extends AbstractTestNGSpringContextTests imp
     public void testCreate() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-        HttpEntity<String> httpEntity = new HttpEntity<>(JSON.toJSONString(function), headers);
-        ResponseEntity<R> result = testRestTemplate.exchange("/api/admin/roles", HttpMethod.POST, httpEntity, R.class);
+        HttpEntity<String> httpEntity = new HttpEntity<>(JSON.toJSONString(roleMenuRel), headers);
+        ResponseEntity<R> result = testRestTemplate.exchange("/api/admin/rolefunctionrels", HttpMethod.POST, httpEntity, R.class);
         log.error(result.getBody().toString());
         Assert.assertEquals(result.getStatusCode().value(), 200);
         Assert.assertEquals(result.getBody().getErrorCode(), 0);
         String json = JSON.toJSONString(result.getBody().getData());
-        function = JSON.parseObject(json, Function.class);
+        roleMenuRel = JSON.parseObject(json, RoleMenuRel.class);
     }
 
     @Test(dependsOnMethods = {"testCreate"})
     public void testUpdate() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-        log.error(function.toString());
-        HttpEntity<String> httpEntity = new HttpEntity<>(JSON.toJSONString(function), headers);
-        ResponseEntity<R> result = testRestTemplate.exchange("/api/admin/roles", HttpMethod.POST, httpEntity, R.class);
+        log.error(roleMenuRel.toString());
+        HttpEntity<String> httpEntity = new HttpEntity<>(JSON.toJSONString(roleMenuRel), headers);
+        ResponseEntity<R> result = testRestTemplate.exchange("/api/admin/rolefunctionrels", HttpMethod.POST, httpEntity, R.class);
         log.error(result.getBody().toString());
         Assert.assertEquals(result.getStatusCode().value(), 200);
         Assert.assertEquals(result.getBody().getErrorCode(), 0);
@@ -91,8 +79,8 @@ public class FunctionControllerTest extends AbstractTestNGSpringContextTests imp
     @Override
     public void testDetail() {
         Map<String, String> multiValueMap = Maps.newHashMap();
-        multiValueMap.put("id", function.getId());
-        R r = testRestTemplate.getForObject("/api/admin/roles/{id}", R.class, multiValueMap);
+        multiValueMap.put("id", roleMenuRel.getId());
+        R r = testRestTemplate.getForObject("/api/admin/rolefunctionrels/{id}", R.class, multiValueMap);
         Assert.assertEquals(r.getErrorCode(), 0);
         Assert.assertNotNull(r.getData());
         log.debug("detail:{}", r.getData());
@@ -104,7 +92,7 @@ public class FunctionControllerTest extends AbstractTestNGSpringContextTests imp
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         HttpEntity<String> httpEntity = new HttpEntity<>("{}", headers);
-        ResponseEntity<R> result = testRestTemplate.exchange("/api/admin/roles/list", HttpMethod.POST, httpEntity, R.class);
+        ResponseEntity<R> result = testRestTemplate.exchange("/api/admin/rolefunctionrels/list", HttpMethod.POST, httpEntity, R.class);
         log.error(result.getBody().toString());
         Assert.assertEquals(result.getStatusCode().value(), 200);
         Assert.assertEquals(result.getBody().getErrorCode(), 0);
@@ -118,7 +106,7 @@ public class FunctionControllerTest extends AbstractTestNGSpringContextTests imp
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         PageSearch pageSearch = new PageSearch();
         HttpEntity<String> httpEntity = new HttpEntity<>(JSON.toJSONString(pageSearch), headers);
-        ResponseEntity<R> result = testRestTemplate.exchange("/api/admin/roles/page", HttpMethod.POST, httpEntity, R.class);
+        ResponseEntity<R> result = testRestTemplate.exchange("/api/admin/rolefunctionrels/page", HttpMethod.POST, httpEntity, R.class);
         log.error(result.getBody().toString());
         Assert.assertEquals(result.getStatusCode().value(), 200);
         Assert.assertEquals(result.getBody().getErrorCode(), 0);
@@ -130,9 +118,9 @@ public class FunctionControllerTest extends AbstractTestNGSpringContextTests imp
     public void testDelete() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-        List<String> deleted = Lists.newArrayList(function.getId());
+        List<String> deleted = Lists.newArrayList(roleMenuRel.getId());
         HttpEntity<String> httpEntity = new HttpEntity<>(JSON.toJSONString(deleted), headers);
-        ResponseEntity<R> result = testRestTemplate.exchange("/api/admin/roles", HttpMethod.DELETE, httpEntity, R.class);
+        ResponseEntity<R> result = testRestTemplate.exchange("/api/admin/rolefunctionrels", HttpMethod.DELETE, httpEntity, R.class);
         log.error(result.getBody().toString());
         Assert.assertEquals(result.getStatusCode().value(), 200);
         Assert.assertEquals(result.getBody().getErrorCode(), 0);

@@ -2,8 +2,7 @@ package com.its.smart.web.service.sys;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.its.smart.api.consts.SmartConsts;
-import com.its.smart.api.entity.sys.RoleFunctionRel;
-import com.its.smart.api.entity.sys.RoleUserRel;
+import com.its.smart.api.entity.sys.RoleMenuRel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -15,39 +14,38 @@ import org.testng.annotations.Test;
  * @author mq
  */
 @SpringBootTest
-public class RoleFunctionRelServiceTest extends AbstractTestNGSpringContextTests implements BaseServiceTest {
+public class RoleMenuRelServiceTest extends AbstractTestNGSpringContextTests implements BaseServiceTest {
 
     @Autowired
-    private IRoleFunctionRelService roleFunctionRelService;
+    private IRoleMenuRelService roleFunctionRelService;
 
-    private static RoleFunctionRel roleFunctionRel;
+    private static RoleMenuRel roleMenuRel;
 
     @BeforeTest
     @Override
     public void initData() {
-        roleFunctionRel = new RoleFunctionRel();
-        roleFunctionRel.setFunctionId("142c4c59c8314be6942976fba6ec7cfc");
-        roleFunctionRel.setRoleId("00759bf8e86c4ec3b7b97c0ddde09850");
-        roleFunctionRel.setPermissions("12");
-        roleFunctionRel.setIsTest(SmartConsts.DataTestType.TEST);
+        roleMenuRel = new RoleMenuRel();
+        roleMenuRel.setMenuId("fefbecedd0b74285b95cd5c66e8b2953");
+        roleMenuRel.setRoleId("285f392eb2ad42c887d4640644d4387f");
+        roleMenuRel.setIsTest(SmartConsts.DataTestType.TEST);
     }
 
     @Test
     @Override
     public void testCreate() {
-        Assert.assertTrue(roleFunctionRelService.insert(roleFunctionRel));
+        Assert.assertTrue(roleFunctionRelService.insert(roleMenuRel));
     }
 
     @Test(dependsOnMethods = {"testCreate"})
     @Override
     public void testUpdate() {
-        Assert.assertTrue(roleFunctionRelService.update(roleFunctionRel, null));
+        Assert.assertTrue(roleFunctionRelService.update(roleMenuRel, null));
     }
 
     @Test(dependsOnMethods = {"testUpdate"})
     @Override
     public void testFindId() {
-        Assert.assertNotNull(roleFunctionRelService.selectById(roleFunctionRel.getId()));
+        Assert.assertNotNull(roleFunctionRelService.selectById(roleMenuRel.getId()));
     }
 
     @Test(dependsOnMethods = {"testFindId"})
@@ -65,7 +63,7 @@ public class RoleFunctionRelServiceTest extends AbstractTestNGSpringContextTests
     @Test(dependsOnMethods = {"testPage"})
     @Override
     public void testDelete() {
-        Assert.assertTrue(roleFunctionRelService.deleteById(roleFunctionRel.getId()));
+        Assert.assertTrue(roleFunctionRelService.deleteById(roleMenuRel.getId()));
     }
 
 //    @Test(dependsOnMethods = {"testDelete"})

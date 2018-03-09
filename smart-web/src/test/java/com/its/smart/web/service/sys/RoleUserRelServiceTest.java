@@ -29,8 +29,8 @@ public class RoleUserRelServiceTest extends AbstractTestNGSpringContextTests imp
     @Override
     public void initData() {
         roleUserRel = new RoleUserRel();
-        roleUserRel.setUserId("8a98e7612f7e42ba83214d545e5d0cf0");
-        roleUserRel.setRoleId("00759bf8e86c4ec3b7b97c0ddde09850");
+        roleUserRel.setUserId("f984a6faca39417aaef824029963c9e2");
+        roleUserRel.setRoleId("285f392eb2ad42c887d4640644d4387f");
         roleUserRel.setIsTest(SmartConsts.DataTestType.TEST);
     }
 

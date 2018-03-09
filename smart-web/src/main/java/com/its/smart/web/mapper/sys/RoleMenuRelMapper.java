@@ -1,6 +1,6 @@
 package com.its.smart.web.mapper.sys;
 
-import com.its.smart.api.entity.sys.RoleFunctionRel;
+import com.its.smart.api.entity.sys.RoleMenuRel;
 import com.its.smart.web.mapper.SmartMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.its.smart.web.mapper.SmartMapper;
  * @author MQ
  * @since 2018-03-07
  */
-public interface RoleFunctionRelMapper extends SmartMapper<RoleFunctionRel> {
+public interface RoleMenuRelMapper extends SmartMapper<RoleMenuRel> {
 
 }

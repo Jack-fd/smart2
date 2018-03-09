@@ -11,12 +11,9 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import org.testng.collections.Maps;
 
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Map;
 
 /**
  * @author mq
@@ -51,7 +48,7 @@ public class BusinessServiceTest extends AbstractTestNGSpringContextTests implem
     @Test(dependsOnMethods = {"testCreate"})
     @Override
     public void testUpdate() {
-        Wrapper<Business> wrapper = new Wrapper(){
+        Wrapper wrapper = new Wrapper() {
 
             @Override
             public String getSqlSegment() {
