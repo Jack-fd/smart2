@@ -11,6 +11,7 @@ import com.its.smart.api.dto.R;
 import com.its.smart.api.entity.sys.RoleMenuRel;
 import com.its.smart.common.utils.QueryUtils;
 import com.its.smart.web.service.sys.IRoleMenuRelService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +38,7 @@ public class RoleMenuRelController {
      *
      * @return 集合
      */
+    @RequiresPermissions("sys:role:select")
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     R<List<RoleMenuRel>> list(@RequestBody ListFilter listFilter) {
         Wrapper<RoleMenuRel> wrapper = QueryUtils.getWrapper(listFilter);
@@ -49,6 +51,7 @@ public class RoleMenuRelController {
      * @param pageSearch 　查询条件
      * @return 集合
      */
+    @RequiresPermissions("sys:role:select")
     @RequestMapping(value = "/page", method = RequestMethod.POST)
     R<RoleMenuRel> page(@RequestBody PageSearch pageSearch) {
         Page<RoleMenuRel> page = new Page<>(pageSearch.getPageNumber(), pageSearch.getPageSize());
@@ -63,6 +66,7 @@ public class RoleMenuRelController {
      *
      * @return 实体
      */
+    @RequiresPermissions("sys:role:info")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     R<RoleMenuRel> detail(@PathVariable("id") String id) {
         return R.OK(roleFunctionRelService.selectById(id));
@@ -73,6 +77,7 @@ public class RoleMenuRelController {
      *
      * @return 结果
      */
+    @RequiresPermissions("sys:role:save")
     @RequestMapping(method = RequestMethod.POST)
     R<RoleMenuRel> create(@RequestBody RoleMenuRel roleMenuRel) {
         if (Strings.isNullOrEmpty(roleMenuRel.getId())) {
@@ -91,6 +96,7 @@ public class RoleMenuRelController {
      * @param ids 　集合
      * @return 结果
      */
+    @RequiresPermissions("sys:role:delete")
     @RequestMapping(method = RequestMethod.DELETE)
     R<String> delete(@RequestBody String[] ids) {
         return R.OK(roleFunctionRelService.deleteBatchIds(Arrays.asList(ids)));

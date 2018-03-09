@@ -7,9 +7,9 @@ import com.its.smart.api.dto.ListFilter;
 import com.its.smart.api.dto.PageSearch;
 import com.its.smart.api.dto.R;
 import com.its.smart.api.entity.sys.Applicaion;
-import com.its.smart.api.entity.sys.Business;
 import com.its.smart.common.utils.QueryUtils;
 import com.its.smart.web.service.sys.IApplicaionService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,8 +37,9 @@ public class ApplicaionController {
      *
      * @return 集合
      */
+    @RequiresPermissions("sys:applicaion:select")
     @RequestMapping(value = "/list", method = RequestMethod.POST)
-    R<List<Business>> list(@RequestBody ListFilter listFilter) {
+    R<List<Applicaion>> list(@RequestBody ListFilter listFilter) {
         Wrapper<Applicaion> wrapper = QueryUtils.getWrapper(listFilter);
         return R.OK(applicaionService.selectList(wrapper));
     }
@@ -49,8 +50,9 @@ public class ApplicaionController {
      * @param pageSearch 　查询条件
      * @return 集合
      */
+    @RequiresPermissions("sys:applicaion:select")
     @RequestMapping(value = "/page", method = RequestMethod.POST)
-    R<Business> page(@RequestBody PageSearch pageSearch) {
+    R<Applicaion> page(@RequestBody PageSearch pageSearch) {
         Page<Applicaion> page = new Page<>(pageSearch.getPageNumber(), pageSearch.getPageSize());
         Wrapper<Applicaion> wrapper = QueryUtils.getWrapper(pageSearch);
         page = applicaionService.selectPage(page, wrapper);
@@ -63,8 +65,9 @@ public class ApplicaionController {
      *
      * @return 实体
      */
+    @RequiresPermissions("sys:applicaion:info")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    R<Business> detail(@PathVariable("id") String id) {
+    R<Applicaion> detail(@PathVariable("id") String id) {
         return R.OK(applicaionService.selectById(id));
     }
 
@@ -73,8 +76,9 @@ public class ApplicaionController {
      *
      * @return 结果
      */
+    @RequiresPermissions("sys:applicaion:save")
     @RequestMapping(method = RequestMethod.POST)
-    R<Business> create(@RequestBody Applicaion applicaion) {
+    R<Applicaion> create(@RequestBody Applicaion applicaion) {
         applicaion.setModifyTime(Calendar.getInstance().getTime());
         Applicaion result = new Applicaion();
         if (applicaionService.insertOrUpdate(applicaion)) {
@@ -89,6 +93,7 @@ public class ApplicaionController {
      * @param ids 　集合
      * @return 结果
      */
+    @RequiresPermissions("sys:applicaion:delete")
     @RequestMapping(method = RequestMethod.DELETE)
     R<String> delete(@RequestBody String[] ids) {
         return R.OK(applicaionService.deleteBatchIds(Arrays.asList(ids)));

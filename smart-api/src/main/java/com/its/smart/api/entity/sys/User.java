@@ -31,34 +31,47 @@ public class User extends SysEntity<User> {
      * 备注
      */
     private String memo;
+
     /**
      * 账号
      */
     private String account;
+
     /**
      * 密码
      */
     private String password;
+
+    /**
+     * 盐
+     */
+    private String salt;
+
     /**
      * 性别
      */
     private String sex;
+
     /**
      * 头像
      */
     private String icon;
+
     /**
      * 电话
      */
     private String phone;
+
     /**
      * 邮箱
      */
     private String email;
+
     /**
      * 状态
      */
     private Integer status;
+
     /**
      * 企业编号
      */

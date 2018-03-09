@@ -11,6 +11,7 @@ import com.its.smart.api.dto.R;
 import com.its.smart.api.entity.sys.Business;
 import com.its.smart.common.utils.QueryUtils;
 import com.its.smart.web.service.sys.IBusinessService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,6 +36,7 @@ public class BusinessController {
      *
      * @return 集合
      */
+    @RequiresPermissions("sys:business:select")
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     R<List<Business>> list(@RequestBody ListFilter listFilter) {
         Wrapper<Business> wrapper = QueryUtils.getWrapper(listFilter);
@@ -47,6 +49,7 @@ public class BusinessController {
      * @param pageSearch 　查询条件
      * @return 集合
      */
+    @RequiresPermissions("sys:business:select")
     @RequestMapping(value = "/page", method = RequestMethod.POST)
     R<Business> page(@RequestBody PageSearch pageSearch) {
         Page<Business> page = new Page<>(pageSearch.getPageNumber(), pageSearch.getPageSize());
@@ -61,6 +64,7 @@ public class BusinessController {
      *
      * @return 实体
      */
+    @RequiresPermissions("sys:business:info")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     R<Business> detail(@PathVariable("id") String id) {
         return R.OK(businessService.selectById(id));
@@ -71,6 +75,7 @@ public class BusinessController {
      *
      * @return 结果
      */
+    @RequiresPermissions("sys:business:save")
     @RequestMapping(method = RequestMethod.POST)
     R<Business> create(@RequestBody Business business) {
         if (Strings.isNullOrEmpty(business.getId())) {
@@ -91,6 +96,7 @@ public class BusinessController {
      * @param ids 　集合
      * @return 结果
      */
+    @RequiresPermissions("sys:business:delete")
     @RequestMapping(method = RequestMethod.DELETE)
     R<String> delete(@RequestBody String[] ids) {
         return R.OK(businessService.deleteBatchIds(Arrays.asList(ids)));

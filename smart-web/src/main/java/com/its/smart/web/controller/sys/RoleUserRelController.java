@@ -11,6 +11,7 @@ import com.its.smart.api.dto.R;
 import com.its.smart.api.entity.sys.RoleUserRel;
 import com.its.smart.common.utils.QueryUtils;
 import com.its.smart.web.service.sys.IRoleUserRelService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +37,7 @@ public class RoleUserRelController {
      *
      * @return 集合
      */
+    @RequiresPermissions("sys:role:selete")
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     R<List<RoleUserRel>> list(@RequestBody ListFilter listFilter) {
         Wrapper<RoleUserRel> wrapper = QueryUtils.getWrapper(listFilter);
@@ -48,6 +50,7 @@ public class RoleUserRelController {
      * @param pageSearch 　查询条件
      * @return 集合
      */
+    @RequiresPermissions("sys:role:select")
     @RequestMapping(value = "/page", method = RequestMethod.POST)
     R<RoleUserRel> page(@RequestBody PageSearch pageSearch) {
         Page<RoleUserRel> page = new Page<>(pageSearch.getPageNumber(), pageSearch.getPageSize());
@@ -62,6 +65,7 @@ public class RoleUserRelController {
      *
      * @return 实体
      */
+    @RequiresPermissions("sys:role:info")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     R<RoleUserRel> detail(@PathVariable("id") String id) {
         return R.OK(roleUserRelService.selectById(id));
@@ -72,6 +76,7 @@ public class RoleUserRelController {
      *
      * @return 结果
      */
+    @RequiresPermissions("sys:role:save")
     @RequestMapping(method = RequestMethod.POST)
     R<RoleUserRel> create(@RequestBody RoleUserRel roleUserRel) {
         if (Strings.isNullOrEmpty(roleUserRel.getId())) {
@@ -90,6 +95,7 @@ public class RoleUserRelController {
      * @param ids 　集合
      * @return 结果
      */
+    @RequiresPermissions("sys:role:delete")
     @RequestMapping(method = RequestMethod.DELETE)
     R<String> delete(@RequestBody String[] ids) {
         return R.OK(roleUserRelService.deleteBatchIds(Arrays.asList(ids)));

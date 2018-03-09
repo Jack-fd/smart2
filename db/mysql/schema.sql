@@ -28,6 +28,7 @@ CREATE TABLE sys_user (
   memo  varchar(255) NULL DEFAULT '' COMMENT '备注' ,
   account  varchar(255) NULL COMMENT '账号' ,
   password  varchar(255) NULL COMMENT '密码' ,
+  salt  varchar(50) NULL COMMENT '盐' ,
   sex  varchar(16) NULL COMMENT '性别' ,
   icon  varchar(255) NULL COMMENT '头像' ,
   phone  varchar(16) NULL COMMENT '电话' ,

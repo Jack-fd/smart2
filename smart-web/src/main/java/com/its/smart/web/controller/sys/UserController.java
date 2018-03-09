@@ -12,6 +12,8 @@ import com.its.smart.api.dto.R;
 import com.its.smart.api.entity.sys.User;
 import com.its.smart.common.utils.QueryUtils;
 import com.its.smart.web.service.sys.IUserService;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +41,7 @@ public class UserController {
      *
      * @return 集合
      */
+    @RequiresPermissions("sys:user:select")
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     R<List<User>> list(@RequestBody ListFilter listFilter) {
         Wrapper<User> wrapper = QueryUtils.getWrapper(listFilter);
@@ -51,6 +54,7 @@ public class UserController {
      * @param pageSearch 　查询条件
      * @return 集合
      */
+    @RequiresPermissions("sys:user:select")
     @RequestMapping(value = "/page", method = RequestMethod.POST)
     R<User> page(@RequestBody PageSearch pageSearch) {
         Page<User> page = new Page<>(pageSearch.getPageNumber(), pageSearch.getPageSize());
@@ -65,6 +69,7 @@ public class UserController {
      *
      * @return 实体
      */
+    @RequiresPermissions("sys:user:info")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     R<User> detail(@PathVariable("id") String id) {
         return R.OK(userService.selectById(id));
@@ -75,10 +80,12 @@ public class UserController {
      *
      * @return 结果
      */
+    @RequiresPermissions("sys:user:save")
     @RequestMapping(method = RequestMethod.POST)
     R<User> create(@RequestBody User user) {
         if (Strings.isNullOrEmpty(user.getId())) {
             user.setName(PinyinHelper.getShortPinyin(user.getDisplayName()));
+            user.setSalt(RandomStringUtils.randomAlphanumeric(20));
             user.setIsSys(SmartConsts.DataSysType.USER);
         }
         user.setModifyTime(Calendar.getInstance().getTime());
@@ -95,6 +102,7 @@ public class UserController {
      * @param ids 　集合
      * @return 结果
      */
+    @RequiresPermissions("sys:user:delete")
     @RequestMapping(method = RequestMethod.DELETE)
     R<String> delete(@RequestBody String[] ids) {
         return R.OK(userService.deleteBatchIds(Arrays.asList(ids)));

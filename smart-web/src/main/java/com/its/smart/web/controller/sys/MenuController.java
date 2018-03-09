@@ -6,10 +6,10 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.its.smart.api.dto.ListFilter;
 import com.its.smart.api.dto.PageSearch;
 import com.its.smart.api.dto.R;
-import com.its.smart.api.entity.sys.Business;
 import com.its.smart.api.entity.sys.Menu;
 import com.its.smart.common.utils.QueryUtils;
 import com.its.smart.web.service.sys.IMenuService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,8 +37,9 @@ public class MenuController {
      *
      * @return 集合
      */
+    @RequiresPermissions("sys:menu:select")
     @RequestMapping(value = "/list", method = RequestMethod.POST)
-    R<List<Business>> list(@RequestBody ListFilter listFilter) {
+    R<List<Menu>> list(@RequestBody ListFilter listFilter) {
         Wrapper<Menu> wrapper = QueryUtils.getWrapper(listFilter);
         return R.OK(functionService.selectList(wrapper));
     }
@@ -49,8 +50,9 @@ public class MenuController {
      * @param pageSearch 　查询条件
      * @return 集合
      */
+    @RequiresPermissions("sys:menu:select")
     @RequestMapping(value = "/page", method = RequestMethod.POST)
-    R<Business> page(@RequestBody PageSearch pageSearch) {
+    R<Menu> page(@RequestBody PageSearch pageSearch) {
         Page<Menu> page = new Page<>(pageSearch.getPageNumber(), pageSearch.getPageSize());
         Wrapper<Menu> wrapper = QueryUtils.getWrapper(pageSearch);
         page = functionService.selectPage(page, wrapper);
@@ -63,8 +65,9 @@ public class MenuController {
      *
      * @return 实体
      */
+    @RequiresPermissions("sys:menu:info")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    R<Business> detail(@PathVariable("id") String id) {
+    R<Menu> detail(@PathVariable("id") String id) {
         return R.OK(functionService.selectById(id));
     }
 
@@ -73,8 +76,9 @@ public class MenuController {
      *
      * @return 结果
      */
+    @RequiresPermissions("sys:menu:save")
     @RequestMapping(method = RequestMethod.POST)
-    R<Business> create(@RequestBody Menu function) {
+    R<Menu> create(@RequestBody Menu function) {
         function.setModifyTime(Calendar.getInstance().getTime());
         Menu result = new Menu();
         if (functionService.insertOrUpdate(function)) {
@@ -89,6 +93,7 @@ public class MenuController {
      * @param ids 　集合
      * @return 结果
      */
+    @RequiresPermissions("sys:menu:delete")
     @RequestMapping(method = RequestMethod.DELETE)
     R<String> delete(@RequestBody String[] ids) {
         return R.OK(functionService.deleteBatchIds(Arrays.asList(ids)));

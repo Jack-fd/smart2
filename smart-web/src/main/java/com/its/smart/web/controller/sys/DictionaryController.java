@@ -8,10 +8,10 @@ import com.its.smart.api.consts.SmartConsts;
 import com.its.smart.api.dto.ListFilter;
 import com.its.smart.api.dto.PageSearch;
 import com.its.smart.api.dto.R;
-import com.its.smart.api.entity.sys.Business;
 import com.its.smart.api.entity.sys.Dictionary;
 import com.its.smart.common.utils.QueryUtils;
 import com.its.smart.web.service.sys.IDictionaryService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +39,7 @@ public class DictionaryController {
      *
      * @return 集合
      */
+    @RequiresPermissions("sys:dictionary:select")
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     R<List<Dictionary>> list(@RequestBody ListFilter listFilter) {
         Wrapper<Dictionary> wrapper = QueryUtils.getWrapper(listFilter);
@@ -51,8 +52,9 @@ public class DictionaryController {
      * @param pageSearch 　查询条件
      * @return 集合
      */
+    @RequiresPermissions("sys:dictionary:select")
     @RequestMapping(value = "/page", method = RequestMethod.POST)
-    R<Business> page(@RequestBody PageSearch pageSearch) {
+    R<Dictionary> page(@RequestBody PageSearch pageSearch) {
         Page<Dictionary> page = new Page<>(pageSearch.getPageNumber(), pageSearch.getPageSize());
         Wrapper<Dictionary> wrapper = QueryUtils.getWrapper(pageSearch);
         page = dictionaryService.selectPage(page, wrapper);
@@ -65,8 +67,9 @@ public class DictionaryController {
      *
      * @return 实体
      */
+    @RequiresPermissions("sys:dictionary:info")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    R<Business> detail(@PathVariable("id") String id) {
+    R<Dictionary> detail(@PathVariable("id") String id) {
         return R.OK(dictionaryService.selectById(id));
     }
 
@@ -75,6 +78,7 @@ public class DictionaryController {
      *
      * @return 结果
      */
+    @RequiresPermissions("sys:dictionary:save")
     @RequestMapping(method = RequestMethod.POST)
     R<Dictionary> create(@RequestBody Dictionary dictionary) {
         if (Strings.isNullOrEmpty(dictionary.getId())) {
@@ -94,6 +98,7 @@ public class DictionaryController {
      * @param ids 　集合
      * @return 结果
      */
+    @RequiresPermissions("sys:dictionary:delete")
     @RequestMapping(method = RequestMethod.DELETE)
     R<String> delete(@RequestBody String[] ids) {
         return R.OK(dictionaryService.deleteBatchIds(Arrays.asList(ids)));

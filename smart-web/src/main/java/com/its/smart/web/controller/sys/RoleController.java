@@ -8,10 +8,10 @@ import com.its.smart.api.consts.SmartConsts;
 import com.its.smart.api.dto.ListFilter;
 import com.its.smart.api.dto.PageSearch;
 import com.its.smart.api.dto.R;
-import com.its.smart.api.entity.sys.Business;
 import com.its.smart.api.entity.sys.Role;
 import com.its.smart.common.utils.QueryUtils;
 import com.its.smart.web.service.sys.IRoleService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,8 +39,9 @@ public class RoleController {
      *
      * @return 集合
      */
+    @RequiresPermissions("sys:role:select")
     @RequestMapping(value = "/list", method = RequestMethod.POST)
-    R<List<Business>> list(@RequestBody ListFilter listFilter) {
+    R<List<Role>> list(@RequestBody ListFilter listFilter) {
         Wrapper<Role> wrapper = QueryUtils.getWrapper(listFilter);
         return R.OK(roleService.selectList(wrapper));
     }
@@ -51,8 +52,9 @@ public class RoleController {
      * @param pageSearch 　查询条件
      * @return 集合
      */
+    @RequiresPermissions("sys:role:select")
     @RequestMapping(value = "/page", method = RequestMethod.POST)
-    R<Business> page(@RequestBody PageSearch pageSearch) {
+    R<Role> page(@RequestBody PageSearch pageSearch) {
         Page<Role> page = new Page<>(pageSearch.getPageNumber(), pageSearch.getPageSize());
         Wrapper<Role> wrapper = QueryUtils.getWrapper(pageSearch);
         page = roleService.selectPage(page, wrapper);
@@ -65,8 +67,9 @@ public class RoleController {
      *
      * @return 实体
      */
+    @RequiresPermissions("sys:role:info")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    R<Business> detail(@PathVariable("id") String id) {
+    R<Role> detail(@PathVariable("id") String id) {
         return R.OK(roleService.selectById(id));
     }
 
@@ -75,8 +78,9 @@ public class RoleController {
      *
      * @return 结果
      */
+    @RequiresPermissions("sys:role:save")
     @RequestMapping(method = RequestMethod.POST)
-    R<Business> create(@RequestBody Role role) {
+    R<Role> create(@RequestBody Role role) {
         if (Strings.isNullOrEmpty(role.getId())) {
             role.setIsSys(SmartConsts.DataSysType.USER);
         }
@@ -94,6 +98,7 @@ public class RoleController {
      * @param ids 　集合
      * @return 结果
      */
+    @RequiresPermissions("sys:role:delete")
     @RequestMapping(method = RequestMethod.DELETE)
     R<String> delete(@RequestBody String[] ids) {
         return R.OK(roleService.deleteBatchIds(Arrays.asList(ids)));

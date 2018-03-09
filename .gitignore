@@ -2,7 +2,8 @@
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, WebStorm
 
 ## Directory-based project format
+logs/
 .idea/
 *.iml
 target
-log
+log.*
