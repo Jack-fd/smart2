@@ -1,4 +1,4 @@
-package com.its.smart.api.entity.relax;
+package com.its.smart.api.entity.wechat;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
@@ -16,8 +16,8 @@ import java.util.Date;
  * @since 2018-03-07
  */
 @Data
-@TableName("relax_wechat_cofnig")
-public class RelaxWechatCofnig extends IdEntity<RelaxWechatCofnig> {
+@TableName("wechat_cofnig")
+public class WechatCofnig extends IdEntity<WechatCofnig> {
 
     /**
      * 创建用户

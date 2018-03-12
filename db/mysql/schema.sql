@@ -178,7 +178,7 @@ CREATE TABLE wechat_message_template (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信消息模板';
 
 -- relax微信用用配置
-CREATE TABLE relax_wechat_cofnig (
+CREATE TABLE wechat_cofnig (
   id  varchar(128) NOT NULL DEFAULT '' COMMENT '编号' ,
   create_user  varchar(128) NULL DEFAULT '' COMMENT '创建用户' ,
   create_time  datetime NULL DEFAULT NOW() COMMENT '创建时间' ,
@@ -199,9 +199,9 @@ CREATE TABLE relax_wechat_cofnig (
   applicaion_id  varchar(128) NULL COMMENT '应用编号' ,
   business_id  varchar(128) NULL COMMENT '企业编号' ,
   PRIMARY KEY (id),
-  CONSTRAINT fk_relax_wechat_cofnig_aid FOREIGN KEY (applicaion_id) REFERENCES sys_applicaion (id) ON UPDATE CASCADE,
-  CONSTRAINT fk_relax_wechat_cofnig_bid FOREIGN KEY (business_id) REFERENCES sys_business (id) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='relax微信用用配置';
+  CONSTRAINT fk_wechat_cofnig_aid FOREIGN KEY (applicaion_id) REFERENCES sys_applicaion (id) ON UPDATE CASCADE,
+  CONSTRAINT fk_wechat_cofnig_bid FOREIGN KEY (business_id) REFERENCES sys_business (id) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信用用配置';
 
 -- RMC消息采集
 CREATE TABLE rmc_wechat_message (

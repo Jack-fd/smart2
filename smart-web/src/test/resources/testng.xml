@@ -22,7 +22,7 @@
 
     <test name="Relax_Service_Test">
         <classes>
-            <class name="com.its.smart.web.service.relax.RelaxWechatCofnigServiceTest"/>
+            <class name="com.its.smart.web.service.wechat.WechatCofnigServiceTest"/>
         </classes>
     </test>
 

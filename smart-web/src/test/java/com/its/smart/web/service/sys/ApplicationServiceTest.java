@@ -37,7 +37,7 @@ public class ApplicationServiceTest extends AbstractTestNGSpringContextTests imp
         applicaion.setIsTest(SmartConsts.DataTestType.TEST);
         applicaion.setTestCloseTime(new Date());
         applicaion.setSystemType(SmartConsts.ApplicationSystemType.RELAX);
-        applicaion.setBusinessId("7e2ea371024b4b0e81c7941814b804f8");
+        applicaion.setBusinessId("3e664b4f1d5d40adb48b569f257e3a20");
     }
 
     @Test
