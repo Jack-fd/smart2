@@ -3,6 +3,7 @@ package com.its.smart.common.utils;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.its.smart.api.dto.ListFilter;
 import com.its.smart.api.dto.SearchFilter;
+import com.its.smart.common.xss.SqlFilter;
 
 import java.util.List;
 
@@ -21,9 +22,10 @@ public class QueryUtils {
                 } else {
                     filterSql.append(" WHERE ");
                 }
-                filterSql.append(searchFilter.getFieldName()).append(" = '").append(searchFilter.getValue()).append("'");
+                String name = SqlFilter.sqlInject(searchFilter.getFieldName().toString());
+                String value = SqlFilter.sqlInject(searchFilter.getValue().toString());
+                filterSql.append(name).append(" = '").append(value).append("'");
             }
-
         }
 
         List<SearchFilter> andFilterList = listFilter.getAndFilters();
@@ -33,7 +35,9 @@ public class QueryUtils {
             } else {
                 filterSql.append(" WHERE ");
             }
-            filterSql.append(searchFilter.getFieldName()).append(searchFilter.getOperator()).append(searchFilter.getValue());
+            String name = SqlFilter.sqlInject(searchFilter.getFieldName().toString());
+            String value = SqlFilter.sqlInject(searchFilter.getValue().toString());
+            filterSql.append(name).append(" = '").append(value).append("'");
         }
         return filterSql.toString();
     }
