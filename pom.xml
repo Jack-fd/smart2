@@ -42,6 +42,7 @@
         <fastjson.version>1.2.46</fastjson.version>
         <shiro.version>1.4.0</shiro.version>
         <commons-lang3.version>3.5</commons-lang3.version>
+        <commons-io.version>2.6</commons-io.version>
     </properties>
 
     <dependencyManagement>
@@ -122,6 +123,12 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons-lang3.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
             </dependency>
 
             <dependency>

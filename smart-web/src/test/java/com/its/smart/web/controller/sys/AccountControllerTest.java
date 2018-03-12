@@ -38,7 +38,7 @@ public class AccountControllerTest extends AbstractTestNGSpringContextTests {
     @Test
     public void signIn() {
         SignIn signIn = new SignIn();
-        signIn.setName("admin");
+        signIn.setName("admin<href></href>");
         signIn.setPassword("admin");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);

@@ -85,7 +85,11 @@ public class UserRealm extends AuthorizingRealm {
         //查询用户信息
         Map<String, Object> map = Maps.newHashMap();
         map.put("account", token.getUsername());
-        User user = userService.selectByMap(map).get(0);
+        User user = null;
+        List<User> userList = userService.selectByMap(map);
+        if(!userList.isEmpty()) {
+            user = userList.get(0);
+        }
 
         //账号不存在
         if (user == null) {
