@@ -10,6 +10,7 @@ import com.its.smart.api.dto.PageSearch;
 import com.its.smart.api.dto.R;
 import com.its.smart.api.entity.sys.RoleMenuRel;
 import com.its.smart.common.utils.QueryUtils;
+import com.its.smart.common.annotation.SysLog;
 import com.its.smart.web.service.sys.IRoleMenuRelService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,6 +78,7 @@ public class RoleMenuRelController {
      *
      * @return 结果
      */
+    @SysLog("保存更新角色与菜单关系")
     @RequiresPermissions("sys:role:save")
     @RequestMapping(method = RequestMethod.POST)
     R<RoleMenuRel> create(@RequestBody RoleMenuRel roleMenuRel) {
@@ -96,6 +98,7 @@ public class RoleMenuRelController {
      * @param ids 　集合
      * @return 结果
      */
+    @SysLog("删除角色与菜单关系")
     @RequiresPermissions("sys:role:delete")
     @RequestMapping(method = RequestMethod.DELETE)
     R<String> delete(@RequestBody String[] ids) {

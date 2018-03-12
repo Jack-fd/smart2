@@ -8,6 +8,7 @@ import com.its.smart.api.dto.PageSearch;
 import com.its.smart.api.dto.R;
 import com.its.smart.api.entity.sys.Applicaion;
 import com.its.smart.common.utils.QueryUtils;
+import com.its.smart.common.annotation.SysLog;
 import com.its.smart.web.service.sys.IApplicaionService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +77,7 @@ public class ApplicaionController {
      *
      * @return 结果
      */
+    @SysLog("保存更新应用")
     @RequiresPermissions("sys:applicaion:save")
     @RequestMapping(method = RequestMethod.POST)
     R<Applicaion> create(@RequestBody Applicaion applicaion) {
@@ -93,6 +95,7 @@ public class ApplicaionController {
      * @param ids 　集合
      * @return 结果
      */
+    @SysLog("删除应用")
     @RequiresPermissions("sys:applicaion:delete")
     @RequestMapping(method = RequestMethod.DELETE)
     R<String> delete(@RequestBody String[] ids) {

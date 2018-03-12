@@ -8,6 +8,7 @@ import com.its.smart.api.dto.PageSearch;
 import com.its.smart.api.dto.R;
 import com.its.smart.api.entity.sys.Menu;
 import com.its.smart.common.utils.QueryUtils;
+import com.its.smart.common.annotation.SysLog;
 import com.its.smart.web.service.sys.IMenuService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +77,7 @@ public class MenuController {
      *
      * @return 结果
      */
+    @SysLog("保存更新目录")
     @RequiresPermissions("sys:menu:save")
     @RequestMapping(method = RequestMethod.POST)
     R<Menu> create(@RequestBody Menu function) {
@@ -93,6 +95,7 @@ public class MenuController {
      * @param ids 　集合
      * @return 结果
      */
+    @SysLog("删除字典")
     @RequiresPermissions("sys:menu:delete")
     @RequestMapping(method = RequestMethod.DELETE)
     R<String> delete(@RequestBody String[] ids) {

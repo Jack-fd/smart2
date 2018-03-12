@@ -10,6 +10,7 @@ import com.its.smart.api.dto.PageSearch;
 import com.its.smart.api.dto.R;
 import com.its.smart.api.entity.sys.Business;
 import com.its.smart.common.utils.QueryUtils;
+import com.its.smart.common.annotation.SysLog;
 import com.its.smart.web.service.sys.IBusinessService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,6 +76,7 @@ public class BusinessController {
      *
      * @return 结果
      */
+    @SysLog("保存更新企业")
     @RequiresPermissions("sys:business:save")
     @RequestMapping(method = RequestMethod.POST)
     R<Business> create(@RequestBody Business business) {
@@ -96,6 +98,7 @@ public class BusinessController {
      * @param ids 　集合
      * @return 结果
      */
+    @SysLog("删除企业")
     @RequiresPermissions("sys:business:delete")
     @RequestMapping(method = RequestMethod.DELETE)
     R<String> delete(@RequestBody String[] ids) {

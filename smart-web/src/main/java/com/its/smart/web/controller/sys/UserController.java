@@ -11,6 +11,7 @@ import com.its.smart.api.dto.PageSearch;
 import com.its.smart.api.dto.R;
 import com.its.smart.api.entity.sys.User;
 import com.its.smart.common.utils.QueryUtils;
+import com.its.smart.common.annotation.SysLog;
 import com.its.smart.web.service.sys.IUserService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -80,6 +81,7 @@ public class UserController {
      *
      * @return 结果
      */
+    @SysLog("保存更新用户")
     @RequiresPermissions("sys:user:save")
     @RequestMapping(method = RequestMethod.POST)
     R<User> create(@RequestBody User user) {
@@ -102,6 +104,7 @@ public class UserController {
      * @param ids 　集合
      * @return 结果
      */
+    @SysLog("删除用户")
     @RequiresPermissions("sys:user:delete")
     @RequestMapping(method = RequestMethod.DELETE)
     R<String> delete(@RequestBody String[] ids) {

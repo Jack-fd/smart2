@@ -255,3 +255,16 @@ CREATE TABLE bmc_wechat_relation (
   CONSTRAINT fk_wechat_bmc_relation_aid FOREIGN KEY (applicaion_id) REFERENCES sys_applicaion (id) ON UPDATE CASCADE,
   CONSTRAINT fk_wechat_bmc_relation_bid FOREIGN KEY (business_id) REFERENCES sys_business (id) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8  COMMENT = 'BMC用户关系';
+
+-- 系统日志
+CREATE TABLE sys_log (
+  id VARCHAR (128) NOT NULL COMMENT '编号',
+  user_name varchar(50) COMMENT '用户名',
+  operation varchar(50) COMMENT '用户操作',
+  method varchar(200) COMMENT '请求方法',
+  params varchar(5000) COMMENT '请求参数',
+  time bigint NOT NULL COMMENT '执行时长(毫秒)',
+  ip varchar(64) COMMENT 'IP地址',
+  create_date datetime COMMENT '创建时间',
+  PRIMARY KEY (id)
+) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8 COMMENT='系统日志';

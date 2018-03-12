@@ -10,6 +10,7 @@ import com.its.smart.api.dto.PageSearch;
 import com.its.smart.api.dto.R;
 import com.its.smart.api.entity.sys.Dictionary;
 import com.its.smart.common.utils.QueryUtils;
+import com.its.smart.common.annotation.SysLog;
 import com.its.smart.web.service.sys.IDictionaryService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +79,7 @@ public class DictionaryController {
      *
      * @return 结果
      */
+    @SysLog("保存更新字典")
     @RequiresPermissions("sys:dictionary:save")
     @RequestMapping(method = RequestMethod.POST)
     R<Dictionary> create(@RequestBody Dictionary dictionary) {
@@ -98,6 +100,7 @@ public class DictionaryController {
      * @param ids 　集合
      * @return 结果
      */
+    @SysLog("删除字典")
     @RequiresPermissions("sys:dictionary:delete")
     @RequestMapping(method = RequestMethod.DELETE)
     R<String> delete(@RequestBody String[] ids) {

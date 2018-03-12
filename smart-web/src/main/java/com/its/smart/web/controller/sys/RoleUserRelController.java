@@ -10,6 +10,7 @@ import com.its.smart.api.dto.PageSearch;
 import com.its.smart.api.dto.R;
 import com.its.smart.api.entity.sys.RoleUserRel;
 import com.its.smart.common.utils.QueryUtils;
+import com.its.smart.common.annotation.SysLog;
 import com.its.smart.web.service.sys.IRoleUserRelService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +77,7 @@ public class RoleUserRelController {
      *
      * @return 结果
      */
+    @SysLog("删除角色与用户关系")
     @RequiresPermissions("sys:role:save")
     @RequestMapping(method = RequestMethod.POST)
     R<RoleUserRel> create(@RequestBody RoleUserRel roleUserRel) {
@@ -95,6 +97,7 @@ public class RoleUserRelController {
      * @param ids 　集合
      * @return 结果
      */
+    @SysLog("删除角色与用户关系")
     @RequiresPermissions("sys:role:delete")
     @RequestMapping(method = RequestMethod.DELETE)
     R<String> delete(@RequestBody String[] ids) {
